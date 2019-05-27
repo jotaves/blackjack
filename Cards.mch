@@ -1,0 +1,7 @@
+/* Cards
+ * Author: João Victor
+ * Creation date: 27/05/2019
+ */
+MACHINE Cards
+SETS CARDS = {ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING}; SUITS = {HEART, DIAMOND, CLUB, SPADE}
+END
