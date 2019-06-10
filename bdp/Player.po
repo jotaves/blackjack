@@ -1,0 +1,56 @@
+THEORY ProofList IS
+_f(1) & _f(2) & _f(3) & _f(9) & _f(10) & WellDefinedness_player_hit.6,(_f(14) & _f(24) => _f(28));
+_f(1) & _f(2) & _f(3) & _f(9) & _f(10) & WellDefinedness_player_hit.5,(_f(14) & _f(24) => _f(27));
+_f(1) & _f(2) & _f(3) & _f(9) & _f(10) & WellDefinedness_player_hit.4,(_f(14) & _f(24) => _f(26));
+_f(1) & _f(2) & _f(3) & _f(9) & _f(10) & WellDefinedness_player_hit.3,(_f(14) & _f(24) => _f(25));
+_f(1) & _f(2) & _f(3) & _f(9) & _f(10) & WellDefinedness_player_hit.2,(_f(24) => _f(26));
+_f(1) & _f(2) & _f(3) & _f(9) & _f(10) & WellDefinedness_player_hit.1,(_f(24) => _f(25));
+_f(1) & _f(2) & _f(3) & _f(9) & _f(20) & surrender.1,(_f(4) & _f(5) => _f(6));
+_f(1) & _f(2) & _f(3) & _f(9) & _f(20) & reject_insurance.1,(_f(4) & _f(5) => _f(6));
+_f(1) & _f(2) & _f(3) & _f(9) & _f(20) & accept_insurance.1,(_f(4) & _f(5) => _f(6));
+_f(1) & _f(2) & _f(3) & _f(9) & _f(20) & split.1,(_f(4) & _f(5) => _f(6));
+_f(1) & _f(2) & _f(3) & _f(9) & _f(20) & double_down.1,(_f(4) & _f(5) => _f(6));
+_f(1) & _f(2) & _f(3) & _f(9) & _f(20) & player_stand.1,(_f(4) & _f(5) => _f(6));
+_f(1) & _f(2) & _f(3) & _f(9) & _f(10) & player_hit.4,(_f(14) & _f(4) & _f(15) => _f(19));
+_f(1) & _f(2) & _f(3) & _f(9) & _f(10) & player_hit.3,(_f(14) & _f(4) & _f(5) => _f(18));
+_f(1) & _f(2) & _f(3) & _f(9) & _f(10) & player_hit.2,(_f(13) & _f(12) & _f(4) & _f(15) => _f(17));
+_f(1) & _f(2) & _f(3) & _f(9) & _f(10) & player_hit.1,(_f(13) & _f(11) & _f(4) & _f(15) => _f(16));
+_f(1) & _f(2) & _f(3) & Initialisation.2,(_f(4) & _f(7) => _f(8));
+_f(1) & _f(2) & _f(3) & Initialisation.1,(_f(4) & _f(5) => _f(6))
+END
+&
+THEORY Formulas IS
+((NAT) = (((0) .. (2147483647)))) & ((INT) = (((-2147483647) .. (2147483647))));
+((1..13)*{CARDS}): FIN(NATURAL*{CARDS}) & not(((1..13)*{CARDS}) = {}) & ((1..4)*{SUITS}): FIN(NATURAL*{SUITS}) & not(((1..4)*{SUITS}) = {});
+((cards_points) : (((((1..13)*{CARDS})) <-> (((1) .. (11))))));
+"Invariant is preserved";
+"Check invariant player_cards : POW( (CARDS * SUITS))";
+{} : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS})));
+"Check invariant ((player_bet) : (NAT))";
+((0) : (NAT));
+player_cards : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS}))) & ((player_bet) : (NAT)) & ((player_points) : (NAT));
+((cc) : ((((1..13)*{CARDS}) * ((1..4)*{SUITS}))));
+(21 +1 <= (player_points + 11));
+not((21 +1 <= (player_points + 11)));
+(((prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))) )(cc)) = ((1|->CARDS)));
+not((((prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))) )(cc)) = ((1|->CARDS))));
+"Check invariant ((player_points) : (NAT))";
+(((player_points + 1)) : (NAT));
+(((player_points + 11)) : (NAT));
+((player_cards) \/ (({cc}))) : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS})));
+(((player_points + (cards_points )((prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))) )(cc)))) : (NAT));
+btrue;
+((bet) : (NAT));
+((player_bet) : (NAT));
+player_cards : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS})));
+"Well definedness";
+((cc) : (dom(prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))))));
+((prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS}))))) : (((dom(prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))))) +-> (ran(prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))))))));
+(((prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))) )(cc)) : (dom(cards_points)));
+((cards_points) : (((dom(cards_points)) +-> (ran(cards_points)))))
+END
+&
+THEORY EnumerateX IS
+CARDS == {ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,TEN,JACK,QUEEN,KING};
+SUITS == {HEART,DIAMOND,CLUB,SPADE}
+END

@@ -1,0 +1,620 @@
+<Proof_Obligations>
+<Define merge="=" name="B definitions">
+<Nary_Pred op="&amp;">
+<Exp_Comparison op="=">
+<Id value="NAT"/>
+<Binary_Exp op="..">
+<Integer_Literal value="0"/>
+<Id value="MAXINT"/>
+</Binary_Exp>
+</Exp_Comparison>
+<Exp_Comparison op="=">
+<Id value="INT"/>
+<Binary_Exp op="..">
+<Id value="MININT"/>
+<Id value="MAXINT"/>
+</Binary_Exp>
+</Exp_Comparison>
+</Nary_Pred>
+</Define>
+<Define merge="=" name="ctx"/>
+<Define merge="=" name="seext"/>
+<Define merge="=" name="lprp">
+<Attr>
+<Pos c="1" l="7" s="4"/>
+</Attr>
+<Set>
+<Id value="CARDS" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:1" typref="3240719902">
+<Attr>
+<Pos c="6" l="7" s="5"/>
+</Attr>
+</Id>
+<Enumerated_Values>
+<Id value="ACE" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:1" typref="1718442021">
+<Attr>
+<Pos c="15" l="7" s="3"/>
+</Attr>
+</Id>
+<Id value="TWO" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:2" typref="1718442021">
+<Attr>
+<Pos c="20" l="7" s="3"/>
+</Attr>
+</Id>
+<Id value="THREE" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:3" typref="1718442021">
+<Attr>
+<Pos c="25" l="7" s="5"/>
+</Attr>
+</Id>
+<Id value="FOUR" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:4" typref="1718442021">
+<Attr>
+<Pos c="32" l="7" s="4"/>
+</Attr>
+</Id>
+<Id value="FIVE" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:5" typref="1718442021">
+<Attr>
+<Pos c="38" l="7" s="4"/>
+</Attr>
+</Id>
+<Id value="SIX" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:6" typref="1718442021">
+<Attr>
+<Pos c="44" l="7" s="3"/>
+</Attr>
+</Id>
+<Id value="SEVEN" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:7" typref="1718442021">
+<Attr>
+<Pos c="49" l="7" s="5"/>
+</Attr>
+</Id>
+<Id value="EIGHT" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:8" typref="1718442021">
+<Attr>
+<Pos c="56" l="7" s="5"/>
+</Attr>
+</Id>
+<Id value="NINE" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:9" typref="1718442021">
+<Attr>
+<Pos c="63" l="7" s="4"/>
+</Attr>
+</Id>
+<Id value="TEN" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:10" typref="1718442021">
+<Attr>
+<Pos c="69" l="7" s="3"/>
+</Attr>
+</Id>
+<Id value="JACK" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:11" typref="1718442021">
+<Attr>
+<Pos c="74" l="7" s="4"/>
+</Attr>
+</Id>
+<Id value="QUEEN" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:12" typref="1718442021">
+<Attr>
+<Pos c="80" l="7" s="5"/>
+</Attr>
+</Id>
+<Id value="KING" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:13" typref="1718442021">
+<Attr>
+<Pos c="87" l="7" s="4"/>
+</Attr>
+</Id>
+</Enumerated_Values>
+</Set>
+<Set>
+<Id value="SUITS" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:2:1" typref="2922520961">
+<Attr>
+<Pos c="94" l="7" s="5"/>
+</Attr>
+</Id>
+<Enumerated_Values>
+<Id value="HEART" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:2:2:1" typref="3390675714">
+<Attr>
+<Pos c="103" l="7" s="5"/>
+</Attr>
+</Id>
+<Id value="DIAMOND" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:2:2:2" typref="3390675714">
+<Attr>
+<Pos c="110" l="7" s="7"/>
+</Attr>
+</Id>
+<Id value="CLUB" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:2:2:3" typref="3390675714">
+<Attr>
+<Pos c="119" l="7" s="4"/>
+</Attr>
+</Id>
+<Id value="SPADE" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:2:2:4" typref="3390675714">
+<Attr>
+<Pos c="125" l="7" s="5"/>
+</Attr>
+</Id>
+</Enumerated_Values>
+</Set>
+</Define>
+<Define merge="=" name="inprp"/>
+<Define merge="=" name="inext"/>
+<Define merge="-" name="inv">
+<Attr>
+<Pos c="1" l="8" s="9"/>
+</Attr>
+<Exp_Comparison op=":">
+<Attr>
+<Pos c="24" l="8" s="1"/>
+</Attr>
+<Id value="cards_points" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:3:1:1" initialTag="cards_points" typref="2741827093">
+<Attr>
+<Pos c="11" l="8" s="12"/>
+</Attr>
+</Id>
+<Binary_Exp op="&lt;->" initialTag="((CARDS) &lt;-> (((1) .. (11))))" typref="2062314414">
+<Attr>
+<Pos c="32" l="8" s="3"/>
+</Attr>
+<Id value="CARDS" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:3:1:2:1" typref="3240719902">
+<Attr>
+<Pos c="26" l="8" s="5"/>
+</Attr>
+</Id>
+<Binary_Exp op=".." typref="3603043417">
+<Attr>
+<Pos c="37" l="8" s="2"/>
+</Attr>
+<Integer_Literal value="1" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:3:1:2:2:1" typref="2701647786">
+<Attr>
+<Pos c="36" l="8" s="1"/>
+</Attr>
+</Integer_Literal>
+<Integer_Literal value="11" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:3:1:2:2:2" typref="2701647786">
+<Attr>
+<Pos c="39" l="8" s="2"/>
+</Attr>
+</Integer_Literal>
+</Binary_Exp>
+</Binary_Exp>
+</Exp_Comparison>
+</Define>
+<Define merge="=" name="ass"/>
+<Define merge="=" name="cst"/>
+<Proof_Obligation>
+<Comment>Initialisation dans une machine abstraite</Comment>
+<Tag>Initialisation</Tag>
+<Tag>Invariant</Tag>
+<Definition name="B definitions"/>
+<Definition name="ctx"/>
+<Definition name="cst"/>
+<Definition name="lprp"/>
+<Definition name="inprp"/>
+<Definition name="inext"/>
+<Definition name="seext"/>
+<Local_Hyp num="1">
+<Nary_Pred op="&amp;"/>
+</Local_Hyp>
+<Simple_Goal>
+<Tag>Invariant is preserved</Tag>
+<Goal>
+<Binary_Pred op="=>">
+<Ref_Hyp num="1"/>
+<Exp_Comparison op=":" goalTag="Invariant is preserved">
+<Attr>
+<Pos c="24" l="8" s="1"/>
+</Attr>
+<Binary_Exp op="\/" tag=",E:\Documentos\blackjack\bdp\Cards.bxml:1:3:1:1,E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:1:1" typref="2741827093">
+<Attr>
+<Pos c="16" l="9" s="12"/>
+</Attr>
+<Binary_Exp op="\/" typref="2741827093">
+<Attr>
+<Pos c="48" l="9" s="2"/>
+</Attr>
+<Binary_Exp op="*" typref="2741827093">
+<Attr>
+<Pos c="38" l="9" s="1"/>
+</Attr>
+<Nary_Exp op="{" typref="3240719902">
+<Attr>
+<Pos c="32" l="9" s="1"/>
+</Attr>
+<Id value="ACE" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:1:1:1" typref="1718442021">
+<Attr>
+<Pos c="33" l="9" s="3"/>
+</Attr>
+</Id>
+</Nary_Exp>
+<Nary_Exp op="{" typref="3603043417">
+<Attr>
+<Pos c="40" l="9" s="1"/>
+</Attr>
+<Integer_Literal value="1" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:1:2:1" typref="2701647786">
+<Attr>
+<Pos c="41" l="9" s="1"/>
+</Attr>
+</Integer_Literal>
+<Integer_Literal value="11" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:1:2:2" typref="2701647786">
+<Attr>
+<Pos c="44" l="9" s="2"/>
+</Attr>
+</Integer_Literal>
+</Nary_Exp>
+</Binary_Exp>
+<Nary_Exp op="{" typref="2741827093">
+<Attr>
+<Pos c="51" l="9" s="1"/>
+</Attr>
+<Binary_Exp op="|->" typref="3082649454">
+<Attr>
+<Pos c="57" l="9" s="3"/>
+</Attr>
+<Id value="TWO" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:2:1:1" typref="1718442021">
+<Attr>
+<Pos c="53" l="9" s="3"/>
+</Attr>
+</Id>
+<Integer_Literal value="2" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:2:1:2" typref="2701647786">
+<Attr>
+<Pos c="61" l="9" s="1"/>
+</Attr>
+</Integer_Literal>
+</Binary_Exp>
+<Binary_Exp op="|->" typref="3082649454">
+<Attr>
+<Pos c="72" l="9" s="3"/>
+</Attr>
+<Id value="THREE" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:2:2:1" typref="1718442021">
+<Attr>
+<Pos c="66" l="9" s="5"/>
+</Attr>
+</Id>
+<Integer_Literal value="3" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:2:2:2" typref="2701647786">
+<Attr>
+<Pos c="76" l="9" s="1"/>
+</Attr>
+</Integer_Literal>
+</Binary_Exp>
+<Binary_Exp op="|->" typref="3082649454">
+<Attr>
+<Pos c="86" l="9" s="3"/>
+</Attr>
+<Id value="FOUR" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:2:3:1" typref="1718442021">
+<Attr>
+<Pos c="81" l="9" s="4"/>
+</Attr>
+</Id>
+<Integer_Literal value="4" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:2:3:2" typref="2701647786">
+<Attr>
+<Pos c="90" l="9" s="1"/>
+</Attr>
+</Integer_Literal>
+</Binary_Exp>
+<Binary_Exp op="|->" typref="3082649454">
+<Attr>
+<Pos c="100" l="9" s="3"/>
+</Attr>
+<Id value="FIVE" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:2:4:1" typref="1718442021">
+<Attr>
+<Pos c="95" l="9" s="4"/>
+</Attr>
+</Id>
+<Integer_Literal value="5" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:2:4:2" typref="2701647786">
+<Attr>
+<Pos c="104" l="9" s="1"/>
+</Attr>
+</Integer_Literal>
+</Binary_Exp>
+<Binary_Exp op="|->" typref="3082649454">
+<Attr>
+<Pos c="113" l="9" s="3"/>
+</Attr>
+<Id value="SIX" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:2:5:1" typref="1718442021">
+<Attr>
+<Pos c="109" l="9" s="3"/>
+</Attr>
+</Id>
+<Integer_Literal value="6" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:2:5:2" typref="2701647786">
+<Attr>
+<Pos c="117" l="9" s="1"/>
+</Attr>
+</Integer_Literal>
+</Binary_Exp>
+<Binary_Exp op="|->" typref="3082649454">
+<Attr>
+<Pos c="127" l="9" s="3"/>
+</Attr>
+<Id value="SEVEN" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:2:6:1" typref="1718442021">
+<Attr>
+<Pos c="121" l="9" s="5"/>
+</Attr>
+</Id>
+<Integer_Literal value="7" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:2:6:2" typref="2701647786">
+<Attr>
+<Pos c="131" l="9" s="1"/>
+</Attr>
+</Integer_Literal>
+</Binary_Exp>
+<Binary_Exp op="|->" typref="3082649454">
+<Attr>
+<Pos c="142" l="9" s="3"/>
+</Attr>
+<Id value="EIGHT" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:2:7:1" typref="1718442021">
+<Attr>
+<Pos c="136" l="9" s="5"/>
+</Attr>
+</Id>
+<Integer_Literal value="8" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:2:7:2" typref="2701647786">
+<Attr>
+<Pos c="146" l="9" s="1"/>
+</Attr>
+</Integer_Literal>
+</Binary_Exp>
+<Binary_Exp op="|->" typref="3082649454">
+<Attr>
+<Pos c="156" l="9" s="3"/>
+</Attr>
+<Id value="NINE" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:2:8:1" typref="1718442021">
+<Attr>
+<Pos c="151" l="9" s="4"/>
+</Attr>
+</Id>
+<Integer_Literal value="9" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:1:2:8:2" typref="2701647786">
+<Attr>
+<Pos c="160" l="9" s="1"/>
+</Attr>
+</Integer_Literal>
+</Binary_Exp>
+</Nary_Exp>
+</Binary_Exp>
+<Binary_Exp op="*" typref="2741827093">
+<Attr>
+<Pos c="192" l="9" s="1"/>
+</Attr>
+<Nary_Exp op="{" typref="3240719902">
+<Attr>
+<Pos c="167" l="9" s="1"/>
+</Attr>
+<Id value="TEN" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:2:1:1" typref="1718442021">
+<Attr>
+<Pos c="168" l="9" s="3"/>
+</Attr>
+</Id>
+<Id value="JACK" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:2:1:2" typref="1718442021">
+<Attr>
+<Pos c="173" l="9" s="4"/>
+</Attr>
+</Id>
+<Id value="QUEEN" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:2:1:3" typref="1718442021">
+<Attr>
+<Pos c="179" l="9" s="5"/>
+</Attr>
+</Id>
+<Id value="KING" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:2:1:4" typref="1718442021">
+<Attr>
+<Pos c="186" l="9" s="4"/>
+</Attr>
+</Id>
+</Nary_Exp>
+<Nary_Exp op="{" typref="3603043417">
+<Attr>
+<Pos c="194" l="9" s="1"/>
+</Attr>
+<Integer_Literal value="10" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:4:1:2:1:2:2:1" typref="2701647786">
+<Attr>
+<Pos c="195" l="9" s="2"/>
+</Attr>
+</Integer_Literal>
+</Nary_Exp>
+</Binary_Exp>
+</Binary_Exp>
+<Binary_Exp op="&lt;->" initialTag="((CARDS) &lt;-> (((1) .. (11))))" typref="2062314414">
+<Attr>
+<Pos c="32" l="8" s="3"/>
+</Attr>
+<Id value="CARDS" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:3:1:2:1" typref="3240719902">
+<Attr>
+<Pos c="26" l="8" s="5"/>
+</Attr>
+</Id>
+<Binary_Exp op=".." typref="3603043417">
+<Attr>
+<Pos c="37" l="8" s="2"/>
+</Attr>
+<Integer_Literal value="1" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:3:1:2:2:1" typref="2701647786">
+<Attr>
+<Pos c="36" l="8" s="1"/>
+</Attr>
+</Integer_Literal>
+<Integer_Literal value="11" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:3:1:2:2:2" typref="2701647786">
+<Attr>
+<Pos c="39" l="8" s="2"/>
+</Attr>
+</Integer_Literal>
+</Binary_Exp>
+</Binary_Exp>
+</Exp_Comparison>
+</Binary_Pred>
+</Goal>
+<Proof_State passList="Force(0),?" proofState="Proved(0)" methodList="pr"/>
+</Simple_Goal>
+</Proof_Obligation>
+<Proof_Obligation>
+<Tag>WellDefinednessConstraints</Tag>
+</Proof_Obligation>
+<Proof_Obligation>
+<Tag>WellDefinednessProperties</Tag>
+<Definition name="B definitions"/>
+<Definition name="ctx"/>
+<Definition name="cst"/>
+<Hypothesis>
+<Attr>
+<Pos c="1" l="7" s="4"/>
+</Attr>
+<Set>
+<Id value="CARDS" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:1" typref="3240719902">
+<Attr>
+<Pos c="6" l="7" s="5"/>
+</Attr>
+</Id>
+<Enumerated_Values>
+<Id value="ACE" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:1" typref="1718442021">
+<Attr>
+<Pos c="15" l="7" s="3"/>
+</Attr>
+</Id>
+<Id value="TWO" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:2" typref="1718442021">
+<Attr>
+<Pos c="20" l="7" s="3"/>
+</Attr>
+</Id>
+<Id value="THREE" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:3" typref="1718442021">
+<Attr>
+<Pos c="25" l="7" s="5"/>
+</Attr>
+</Id>
+<Id value="FOUR" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:4" typref="1718442021">
+<Attr>
+<Pos c="32" l="7" s="4"/>
+</Attr>
+</Id>
+<Id value="FIVE" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:5" typref="1718442021">
+<Attr>
+<Pos c="38" l="7" s="4"/>
+</Attr>
+</Id>
+<Id value="SIX" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:6" typref="1718442021">
+<Attr>
+<Pos c="44" l="7" s="3"/>
+</Attr>
+</Id>
+<Id value="SEVEN" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:7" typref="1718442021">
+<Attr>
+<Pos c="49" l="7" s="5"/>
+</Attr>
+</Id>
+<Id value="EIGHT" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:8" typref="1718442021">
+<Attr>
+<Pos c="56" l="7" s="5"/>
+</Attr>
+</Id>
+<Id value="NINE" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:9" typref="1718442021">
+<Attr>
+<Pos c="63" l="7" s="4"/>
+</Attr>
+</Id>
+<Id value="TEN" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:10" typref="1718442021">
+<Attr>
+<Pos c="69" l="7" s="3"/>
+</Attr>
+</Id>
+<Id value="JACK" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:11" typref="1718442021">
+<Attr>
+<Pos c="74" l="7" s="4"/>
+</Attr>
+</Id>
+<Id value="QUEEN" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:12" typref="1718442021">
+<Attr>
+<Pos c="80" l="7" s="5"/>
+</Attr>
+</Id>
+<Id value="KING" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:1:2:13" typref="1718442021">
+<Attr>
+<Pos c="87" l="7" s="4"/>
+</Attr>
+</Id>
+</Enumerated_Values>
+</Set>
+<Set>
+<Id value="SUITS" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:2:1" typref="2922520961">
+<Attr>
+<Pos c="94" l="7" s="5"/>
+</Attr>
+</Id>
+<Enumerated_Values>
+<Id value="HEART" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:2:2:1" typref="3390675714">
+<Attr>
+<Pos c="103" l="7" s="5"/>
+</Attr>
+</Id>
+<Id value="DIAMOND" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:2:2:2" typref="3390675714">
+<Attr>
+<Pos c="110" l="7" s="7"/>
+</Attr>
+</Id>
+<Id value="CLUB" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:2:2:3" typref="3390675714">
+<Attr>
+<Pos c="119" l="7" s="4"/>
+</Attr>
+</Id>
+<Id value="SPADE" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:1:2:2:4" typref="3390675714">
+<Attr>
+<Pos c="125" l="7" s="5"/>
+</Attr>
+</Id>
+</Enumerated_Values>
+</Set>
+</Hypothesis>
+</Proof_Obligation>
+<Proof_Obligation>
+<Tag>WellDefinednessInvariant</Tag>
+<Definition name="B definitions"/>
+<Definition name="ctx"/>
+<Definition name="cst"/>
+<Definition name="lprp"/>
+<Definition name="inprp"/>
+<Definition name="inext"/>
+<Definition name="seext"/>
+</Proof_Obligation>
+<Proof_Obligation>
+<Tag>WellDefinednessInitialisation</Tag>
+<Definition name="B definitions"/>
+<Definition name="ctx"/>
+<Definition name="cst"/>
+<Definition name="lprp"/>
+<Definition name="inprp"/>
+<Definition name="inext"/>
+<Definition name="seext"/>
+</Proof_Obligation>
+<TypeInfos>
+<Type id="3240719902">
+<Unary_Exp op="POW">
+<Id value="CARDS" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:5:1:1:1"/>
+</Unary_Exp>
+</Type>
+<Type id="1718442021">
+<Id value="CARDS" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:5:2:1"/>
+</Type>
+<Type id="2922520961">
+<Unary_Exp op="POW">
+<Id value="SUITS" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:5:3:1:1"/>
+</Unary_Exp>
+</Type>
+<Type id="3390675714">
+<Id value="SUITS" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:5:4:1"/>
+</Type>
+<Type id="2741827093">
+<Unary_Exp op="POW">
+<Binary_Exp op="*">
+<Id value="CARDS" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:5:5:1:1:1"/>
+<Id value="INTEGER" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:5:5:1:1:2"/>
+</Binary_Exp>
+</Unary_Exp>
+</Type>
+<Type id="2062314414">
+<Unary_Exp op="POW">
+<Unary_Exp op="POW">
+<Binary_Exp op="*">
+<Id value="CARDS" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:5:6:1:1:1:1"/>
+<Id value="INTEGER" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:5:6:1:1:1:2"/>
+</Binary_Exp>
+</Unary_Exp>
+</Unary_Exp>
+</Type>
+<Type id="3603043417">
+<Unary_Exp op="POW">
+<Id value="INTEGER" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:5:7:1:1"/>
+</Unary_Exp>
+</Type>
+<Type id="2701647786">
+<Id value="INTEGER" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:5:8:1"/>
+</Type>
+<Type id="3082649454">
+<Binary_Exp op="*">
+<Id value="CARDS" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:5:9:1:1"/>
+<Id value="INTEGER" tag="E:\Documentos\blackjack\bdp\Cards.bxml:1:5:9:1:2"/>
+</Binary_Exp>
+</Type>
+</TypeInfos>
+</Proof_Obligations>

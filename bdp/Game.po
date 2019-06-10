@@ -1,0 +1,49 @@
+THEORY ProofList IS
+_f(1) & _f(2) & _f(3) & _f(4) & _f(10) & _f(11) & WellDefinedness_hit_action.6,(_f(14) & _f(13) & _f(21) => _f(25));
+_f(1) & _f(2) & _f(3) & _f(4) & _f(10) & _f(11) & WellDefinedness_hit_action.5,(_f(14) & _f(13) & _f(21) => _f(24));
+_f(1) & _f(2) & _f(3) & _f(4) & _f(10) & _f(11) & WellDefinedness_hit_action.4,(_f(14) & _f(13) & _f(21) => _f(23));
+_f(1) & _f(2) & _f(3) & _f(4) & _f(10) & _f(11) & WellDefinedness_hit_action.3,(_f(14) & _f(13) & _f(21) => _f(22));
+_f(1) & _f(2) & _f(3) & _f(4) & _f(10) & _f(11) & WellDefinedness_hit_action.2,(_f(14) & _f(21) => _f(23));
+_f(1) & _f(2) & _f(3) & _f(4) & _f(10) & _f(11) & WellDefinedness_hit_action.1,(_f(14) & _f(21) => _f(22));
+_f(1) & _f(2) & _f(3) & _f(4) & _f(10) & _f(16) & stand_action.3,(_f(14) & _f(7) & _f(8) => _f(15));
+_f(1) & _f(2) & _f(3) & _f(4) & _f(10) & _f(16) & stand_action.2,(_f(14) & _f(17) => _f(19));
+_f(1) & _f(2) & _f(3) & _f(4) & _f(10) & _f(16) & stand_action.1,(_f(14) & _f(17) => _f(18));
+_f(1) & _f(2) & _f(3) & _f(4) & _f(10) & _f(11) & hit_action.2,(_f(14) & _f(13) & _f(7) & _f(8) => _f(15));
+_f(1) & _f(2) & _f(3) & _f(4) & _f(10) & _f(11) & hit_action.1,(_f(14) & _f(12) & _f(7) & _f(8) => _f(15));
+_f(1) & _f(2) & _f(3) & _f(4) & Initialisation.1,(_f(5) & _f(6) & _f(6) & _f(5) & _f(6) & _f(7) & _f(8) => _f(9))
+END
+&
+THEORY Formulas IS
+((NAT) = (((0) .. (2147483647)))) & ((INT) = (((-2147483647) .. (2147483647))));
+((1..13)*{CARDS}): FIN(NATURAL*{CARDS}) & not(((1..13)*{CARDS}) = {}) & ((1..4)*{SUITS}): FIN(NATURAL*{SUITS}) & not(((1..4)*{SUITS}) = {}) & ((1..2)*{PLAYER_TYPE}): FIN(NATURAL*{PLAYER_TYPE}) & not(((1..2)*{PLAYER_TYPE}) = {});
+player_cards : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS}))) & ((player_bet) : (NAT)) & ((player_points) : (NAT)) & dealer_cards : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS}))) & ((dealer_points) : (NAT));
+((cards_points) : (((((1..13)*{CARDS})) <-> (((1) .. (11))))));
+{} : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS})));
+((0) : (NAT));
+"Invariant is preserved";
+"Check invariant game_cards : POW( (CARDS * SUITS))";
+(((1..13)*{CARDS}) * ((1..4)*{SUITS})) : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS})));
+game_cards : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS}))) & ((current_player) : (((1..2)*{PLAYER_TYPE})));
+btrue;
+(((prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))) )(cc)) = ((1|->CARDS)));
+not((((prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))) )(cc)) = ((1|->CARDS))));
+((cc) : ((((1..13)*{CARDS}) * ((1..4)*{SUITS}))));
+(game_cards - ({cc})) : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS})));
+(player_points <= 21) & (0 <= player_points);
+"Precondition predicate";
+(dealer_points <= 18);
+(0 <= dealer_points);
+game_cards : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS})));
+"Well definedness";
+((cc) : (dom(prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))))));
+((prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS}))))) : (((dom(prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))))) +-> (ran(prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))))))));
+(((prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))) )(cc)) : (dom(cards_points)));
+((cards_points) : (((dom(cards_points)) +-> (ran(cards_points)))));
+(player_points <= 21)
+END
+&
+THEORY EnumerateX IS
+CARDS == {ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,TEN,JACK,QUEEN,KING};
+PLAYER_TYPE == {PLAYER,DEALER};
+SUITS == {HEART,DIAMOND,CLUB,SPADE}
+END

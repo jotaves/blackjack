@@ -1,0 +1,11 @@
+THEORY ProofList
+END
+&
+THEORY Formulas IS
+((NAT) = (((0) .. (2147483647)))) & ((INT) = (((-2147483647) .. (2147483647))));
+((1..2)*{PLAYER_TYPE}): FIN(NATURAL*{PLAYER_TYPE}) & not(((1..2)*{PLAYER_TYPE}) = {})
+END
+&
+THEORY EnumerateX IS
+PLAYER_TYPE == {PLAYER,DEALER}
+END

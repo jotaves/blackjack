@@ -1,0 +1,108 @@
+<Machine name='Deck' type='abstraction'>
+<Sees>
+<Attr>
+<Pos l='6' c='1' s='4'/>
+</Attr>
+<Referenced_Machine>
+<Attr>
+<Pos l='6' c='6' s='5'/>
+</Attr>
+<Name>Cards</Name>
+</Referenced_Machine>
+</Sees>
+<Abstract_Variables>
+<Attr>
+<Pos l='7' c='1' s='18'/>
+</Attr>
+<Id value='deck' typref='4195677757'>
+<Attr>
+<Pos l='7' c='11' s='4'/>
+</Attr>
+</Id>
+</Abstract_Variables>
+<Invariant>
+<Attr>
+<Pos l='8' c='1' s='9'/>
+</Attr>
+<Exp_Comparison op='&lt;:'>
+<Attr>
+<Pos l='8' c='16' s='2'/>
+</Attr>
+<Id value='deck' typref='4195677757'>
+<Attr>
+<Pos l='8' c='11' s='4'/>
+</Attr>
+</Id>
+<Binary_Exp op='*' typref='4195677757'>
+<Attr>
+<Pos l='8' c='25' s='1'/>
+</Attr>
+<Id value='CARDS' typref='3240719902'>
+<Attr>
+<Pos l='8' c='19' s='5'/>
+</Attr>
+</Id>
+<Id value='SUITS' typref='2922520961'>
+<Attr>
+<Pos l='8' c='27' s='5'/>
+</Attr>
+</Id>
+</Binary_Exp>
+</Exp_Comparison>
+</Invariant>
+<Initialisation>
+<Attr>
+<Pos l='9' c='1' s='14'/>
+</Attr>
+<Assignement_Sub>
+<Attr>
+<Pos l='9' c='21' s='2'/>
+</Attr>
+<Variables>
+<Id value='deck' typref='4195677757'>
+<Attr>
+<Pos l='9' c='16' s='4'/>
+</Attr>
+</Id>
+</Variables>
+<Values>
+<Binary_Exp op='*' typref='4195677757'>
+<Attr>
+<Pos l='9' c='30' s='1'/>
+</Attr>
+<Id value='CARDS' typref='3240719902'>
+<Attr>
+<Pos l='9' c='24' s='5'/>
+</Attr>
+</Id>
+<Id value='SUITS' typref='2922520961'>
+<Attr>
+<Pos l='9' c='32' s='5'/>
+</Attr>
+</Id>
+</Binary_Exp>
+</Values>
+</Assignement_Sub>
+</Initialisation>
+<TypeInfos>
+<Type id='4195677757'>
+<Unary_Exp op='POW'>
+<Binary_Exp op='*'>
+<Id value='CARDS'/>
+<Id value='SUITS'/>
+</Binary_Exp>
+</Unary_Exp>
+</Type>
+<Type id='3240719902'>
+<Unary_Exp op='POW'>
+<Id value='CARDS'/>
+</Unary_Exp>
+</Type>
+<Type id='2922520961'>
+<Unary_Exp op='POW'>
+<Id value='SUITS'/>
+</Unary_Exp>
+</Type>
+</TypeInfos>
+
+</Machine>

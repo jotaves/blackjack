@@ -1,0 +1,40 @@
+<Machine name='Game_ctx' type='abstraction'>
+<Sets>
+<Attr>
+<Pos l='7' c='1' s='4'/>
+</Attr>
+<Set>
+<Id value='PLAYER_TYPE' typref='3566340851'>
+<Attr>
+<Pos l='7' c='6' s='11'/>
+</Attr>
+</Id>
+<Enumerated_Values>
+<Id value='PLAYER' typref='432553872'>
+<Attr>
+<Pos l='7' c='21' s='6'/>
+</Attr>
+</Id>
+<Id value='DEALER' typref='432553872'>
+<Attr>
+<Pos l='7' c='29' s='6'/>
+</Attr>
+</Id>
+</Enumerated_Values>
+</Set>
+</Sets>
+<Initialisation>
+<Skip/>
+</Initialisation>
+<TypeInfos>
+<Type id='3566340851'>
+<Unary_Exp op='POW'>
+<Id value='PLAYER_TYPE'/>
+</Unary_Exp>
+</Type>
+<Type id='432553872'>
+<Id value='PLAYER_TYPE'/>
+</Type>
+</TypeInfos>
+
+</Machine>
