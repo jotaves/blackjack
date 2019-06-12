@@ -126,7 +126,7 @@
 <Operations>
 <Operation name='dealer_hit'>
 <Attr>
-<Pos l='12' c='5' s='10' endLine='16'/>
+<Pos l='12' c='5' s='10' endLine='15'/>
 </Attr>
 <Input_Parameters>
 <Id value='cc' typref='3661350854'>
@@ -197,32 +197,32 @@
 <Body>
 <Assignement_Sub>
 <Attr>
-<Pos l='15' c='22' s='2'/>
+<Pos l='14' c='23' s='2'/>
 </Attr>
 <Variables>
 <Id value='dealer_cards' typref='4195677757'>
 <Attr>
-<Pos l='15' c='9' s='12'/>
+<Pos l='14' c='10' s='12'/>
 </Attr>
 </Id>
 </Variables>
 <Values>
 <Binary_Exp op='\/' typref='4195677757'>
 <Attr>
-<Pos l='15' c='38' s='2'/>
+<Pos l='14' c='39' s='2'/>
 </Attr>
 <Id value='dealer_cards' typref='4195677757'>
 <Attr>
-<Pos l='15' c='25' s='12'/>
+<Pos l='14' c='26' s='12'/>
 </Attr>
 </Id>
 <Nary_Exp op='{' typref='4195677757'>
 <Attr>
-<Pos l='15' c='41' s='1'/>
+<Pos l='14' c='42' s='1'/>
 </Attr>
 <Id value='cc' typref='3661350854'>
 <Attr>
-<Pos l='15' c='42' s='2'/>
+<Pos l='14' c='43' s='2'/>
 </Attr>
 </Id>
 </Nary_Exp>

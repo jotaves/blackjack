@@ -139,21 +139,11 @@
 <Pos l='8' c='26' s='5'/>
 </Attr>
 </Id>
-<Binary_Exp op='..' typref='3603043417'>
+<Id value='NAT' typref='3603043417'>
 <Attr>
-<Pos l='8' c='37' s='2'/>
+<Pos l='8' c='36' s='3'/>
 </Attr>
-<Integer_Literal value='1' typref='2701647786'>
-<Attr>
-<Pos l='8' c='36' s='1'/>
-</Attr>
-</Integer_Literal>
-<Integer_Literal value='11' typref='2701647786'>
-<Attr>
-<Pos l='8' c='39' s='2'/>
-</Attr>
-</Integer_Literal>
-</Binary_Exp>
+</Id>
 </Binary_Exp>
 </Exp_Comparison>
 </Invariant>
@@ -175,204 +165,184 @@
 <Values>
 <Binary_Exp op='\/' typref='2741827093'>
 <Attr>
-<Pos l='9' c='164' s='2'/>
+<Pos l='9' c='159' s='2'/>
 </Attr>
-<Binary_Exp op='\/' typref='2741827093'>
-<Attr>
-<Pos l='9' c='48' s='2'/>
-</Attr>
-<Binary_Exp op='*' typref='2741827093'>
-<Attr>
-<Pos l='9' c='38' s='1'/>
-</Attr>
-<Nary_Exp op='{' typref='3240719902'>
+<Nary_Exp op='{' typref='2741827093'>
 <Attr>
 <Pos l='9' c='32' s='1'/>
 </Attr>
-<Id value='ACE' typref='1718442021'>
-<Attr>
-<Pos l='9' c='33' s='3'/>
-</Attr>
-</Id>
-</Nary_Exp>
-<Nary_Exp op='{' typref='3603043417'>
-<Attr>
-<Pos l='9' c='40' s='1'/>
-</Attr>
-<Integer_Literal value='1' typref='2701647786'>
-<Attr>
-<Pos l='9' c='41' s='1'/>
-</Attr>
-</Integer_Literal>
-<Integer_Literal value='11' typref='2701647786'>
-<Attr>
-<Pos l='9' c='44' s='2'/>
-</Attr>
-</Integer_Literal>
-</Nary_Exp>
-</Binary_Exp>
-<Nary_Exp op='{' typref='2741827093'>
-<Attr>
-<Pos l='9' c='51' s='1'/>
-</Attr>
 <Binary_Exp op='|-&gt;' typref='3082649454'>
 <Attr>
-<Pos l='9' c='57' s='3'/>
+<Pos l='9' c='38' s='3'/>
+</Attr>
+<Id value='ACE' typref='1718442021'>
+<Attr>
+<Pos l='9' c='34' s='3'/>
+</Attr>
+</Id>
+<Integer_Literal value='11' typref='2701647786'>
+<Attr>
+<Pos l='9' c='42' s='2'/>
+</Attr>
+</Integer_Literal>
+</Binary_Exp>
+<Binary_Exp op='|-&gt;' typref='3082649454'>
+<Attr>
+<Pos l='9' c='52' s='3'/>
 </Attr>
 <Id value='TWO' typref='1718442021'>
 <Attr>
-<Pos l='9' c='53' s='3'/>
+<Pos l='9' c='48' s='3'/>
 </Attr>
 </Id>
 <Integer_Literal value='2' typref='2701647786'>
 <Attr>
-<Pos l='9' c='61' s='1'/>
+<Pos l='9' c='56' s='1'/>
 </Attr>
 </Integer_Literal>
 </Binary_Exp>
 <Binary_Exp op='|-&gt;' typref='3082649454'>
 <Attr>
-<Pos l='9' c='72' s='3'/>
+<Pos l='9' c='67' s='3'/>
 </Attr>
 <Id value='THREE' typref='1718442021'>
 <Attr>
-<Pos l='9' c='66' s='5'/>
+<Pos l='9' c='61' s='5'/>
 </Attr>
 </Id>
 <Integer_Literal value='3' typref='2701647786'>
 <Attr>
-<Pos l='9' c='76' s='1'/>
+<Pos l='9' c='71' s='1'/>
 </Attr>
 </Integer_Literal>
 </Binary_Exp>
 <Binary_Exp op='|-&gt;' typref='3082649454'>
 <Attr>
-<Pos l='9' c='86' s='3'/>
+<Pos l='9' c='81' s='3'/>
 </Attr>
 <Id value='FOUR' typref='1718442021'>
 <Attr>
-<Pos l='9' c='81' s='4'/>
+<Pos l='9' c='76' s='4'/>
 </Attr>
 </Id>
 <Integer_Literal value='4' typref='2701647786'>
 <Attr>
-<Pos l='9' c='90' s='1'/>
+<Pos l='9' c='85' s='1'/>
 </Attr>
 </Integer_Literal>
 </Binary_Exp>
 <Binary_Exp op='|-&gt;' typref='3082649454'>
 <Attr>
-<Pos l='9' c='100' s='3'/>
+<Pos l='9' c='95' s='3'/>
 </Attr>
 <Id value='FIVE' typref='1718442021'>
 <Attr>
-<Pos l='9' c='95' s='4'/>
+<Pos l='9' c='90' s='4'/>
 </Attr>
 </Id>
 <Integer_Literal value='5' typref='2701647786'>
 <Attr>
-<Pos l='9' c='104' s='1'/>
+<Pos l='9' c='99' s='1'/>
 </Attr>
 </Integer_Literal>
 </Binary_Exp>
 <Binary_Exp op='|-&gt;' typref='3082649454'>
 <Attr>
-<Pos l='9' c='113' s='3'/>
+<Pos l='9' c='108' s='3'/>
 </Attr>
 <Id value='SIX' typref='1718442021'>
 <Attr>
-<Pos l='9' c='109' s='3'/>
+<Pos l='9' c='104' s='3'/>
 </Attr>
 </Id>
 <Integer_Literal value='6' typref='2701647786'>
 <Attr>
-<Pos l='9' c='117' s='1'/>
+<Pos l='9' c='112' s='1'/>
 </Attr>
 </Integer_Literal>
 </Binary_Exp>
 <Binary_Exp op='|-&gt;' typref='3082649454'>
 <Attr>
-<Pos l='9' c='127' s='3'/>
+<Pos l='9' c='122' s='3'/>
 </Attr>
 <Id value='SEVEN' typref='1718442021'>
 <Attr>
-<Pos l='9' c='121' s='5'/>
+<Pos l='9' c='116' s='5'/>
 </Attr>
 </Id>
 <Integer_Literal value='7' typref='2701647786'>
 <Attr>
-<Pos l='9' c='131' s='1'/>
+<Pos l='9' c='126' s='1'/>
 </Attr>
 </Integer_Literal>
 </Binary_Exp>
 <Binary_Exp op='|-&gt;' typref='3082649454'>
 <Attr>
-<Pos l='9' c='142' s='3'/>
+<Pos l='9' c='137' s='3'/>
 </Attr>
 <Id value='EIGHT' typref='1718442021'>
 <Attr>
-<Pos l='9' c='136' s='5'/>
+<Pos l='9' c='131' s='5'/>
 </Attr>
 </Id>
 <Integer_Literal value='8' typref='2701647786'>
 <Attr>
-<Pos l='9' c='146' s='1'/>
+<Pos l='9' c='141' s='1'/>
 </Attr>
 </Integer_Literal>
 </Binary_Exp>
 <Binary_Exp op='|-&gt;' typref='3082649454'>
 <Attr>
-<Pos l='9' c='156' s='3'/>
+<Pos l='9' c='151' s='3'/>
 </Attr>
 <Id value='NINE' typref='1718442021'>
 <Attr>
-<Pos l='9' c='151' s='4'/>
+<Pos l='9' c='146' s='4'/>
 </Attr>
 </Id>
 <Integer_Literal value='9' typref='2701647786'>
 <Attr>
-<Pos l='9' c='160' s='1'/>
+<Pos l='9' c='155' s='1'/>
 </Attr>
 </Integer_Literal>
 </Binary_Exp>
 </Nary_Exp>
-</Binary_Exp>
 <Binary_Exp op='*' typref='2741827093'>
 <Attr>
-<Pos l='9' c='192' s='1'/>
+<Pos l='9' c='187' s='1'/>
 </Attr>
 <Nary_Exp op='{' typref='3240719902'>
 <Attr>
-<Pos l='9' c='167' s='1'/>
+<Pos l='9' c='162' s='1'/>
 </Attr>
 <Id value='TEN' typref='1718442021'>
 <Attr>
-<Pos l='9' c='168' s='3'/>
+<Pos l='9' c='163' s='3'/>
 </Attr>
 </Id>
 <Id value='JACK' typref='1718442021'>
 <Attr>
-<Pos l='9' c='173' s='4'/>
+<Pos l='9' c='168' s='4'/>
 </Attr>
 </Id>
 <Id value='QUEEN' typref='1718442021'>
 <Attr>
-<Pos l='9' c='179' s='5'/>
+<Pos l='9' c='174' s='5'/>
 </Attr>
 </Id>
 <Id value='KING' typref='1718442021'>
 <Attr>
-<Pos l='9' c='186' s='4'/>
+<Pos l='9' c='181' s='4'/>
 </Attr>
 </Id>
 </Nary_Exp>
 <Nary_Exp op='{' typref='3603043417'>
 <Attr>
-<Pos l='9' c='194' s='1'/>
+<Pos l='9' c='189' s='1'/>
 </Attr>
 <Integer_Literal value='10' typref='2701647786'>
 <Attr>
-<Pos l='9' c='195' s='2'/>
+<Pos l='9' c='190' s='2'/>
 </Attr>
 </Integer_Literal>
 </Nary_Exp>
@@ -421,14 +391,14 @@
 <Id value='INTEGER'/>
 </Unary_Exp>
 </Type>
-<Type id='2701647786'>
-<Id value='INTEGER'/>
-</Type>
 <Type id='3082649454'>
 <Binary_Exp op='*'>
 <Id value='CARDS'/>
 <Id value='INTEGER'/>
 </Binary_Exp>
+</Type>
+<Type id='2701647786'>
+<Id value='INTEGER'/>
 </Type>
 </TypeInfos>
 

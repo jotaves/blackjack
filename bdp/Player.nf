@@ -37,9 +37,9 @@ THEORY ListVariablesX IS
   External_Context_List_Variables(Machine(Player))==(?);
   Context_List_Variables(Machine(Player))==(?);
   Abstract_List_Variables(Machine(Player))==(?);
-  Local_List_Variables(Machine(Player))==(player_points,player_bet,player_cards);
-  List_Variables(Machine(Player))==(player_points,player_bet,player_cards);
-  External_List_Variables(Machine(Player))==(player_points,player_bet,player_cards)
+  Local_List_Variables(Machine(Player))==(total_points,player_points,player_bet,player_cards);
+  List_Variables(Machine(Player))==(total_points,player_points,player_bet,player_cards);
+  External_List_Variables(Machine(Player))==(total_points,player_points,player_bet,player_cards)
 END
 &
 THEORY ListVisibleVariablesX IS
@@ -56,8 +56,8 @@ THEORY ListInvariantX IS
   Gluing_List_Invariant(Machine(Player))==(btrue);
   Expanded_List_Invariant(Machine(Player))==(btrue);
   Abstract_List_Invariant(Machine(Player))==(btrue);
-  Context_List_Invariant(Machine(Player))==(cards_points: CARDS <-> 1..11);
-  List_Invariant(Machine(Player))==(player_cards <: CARDS*SUITS & player_bet: NAT & player_points: NAT)
+  Context_List_Invariant(Machine(Player))==(cards_points: CARDS <-> NAT);
+  List_Invariant(Machine(Player))==(player_cards <: CARDS*SUITS & player_bet: NAT & player_points: CARDS*SUITS <-> NAT & total_points: NAT)
 END
 &
 THEORY ListAssertionsX IS
@@ -76,9 +76,9 @@ THEORY ListExclusivityX IS
 END
 &
 THEORY ListInitialisationX IS
-  Expanded_List_Initialisation(Machine(Player))==(player_cards,player_bet,player_points:={},0,0);
+  Expanded_List_Initialisation(Machine(Player))==(player_cards,player_bet,player_points,total_points:={},0,{},0);
   Context_List_Initialisation(Machine(Player))==(skip);
-  List_Initialisation(Machine(Player))==(player_cards:={} || player_bet:=0 || player_points:=0)
+  List_Initialisation(Machine(Player))==(player_cards:={} || player_bet:=0 || player_points:={} || total_points:=0)
 END
 &
 THEORY ListParametersX IS
@@ -135,32 +135,32 @@ END
 THEORY ListOperationGuardX END
 &
 THEORY ListPreconditionX IS
-  List_Precondition(Machine(Player),player_hit)==(cc: CARDS*SUITS);
-  List_Precondition(Machine(Player),player_stand)==(btrue);
-  List_Precondition(Machine(Player),double_down)==(btrue);
-  List_Precondition(Machine(Player),split)==(btrue);
-  List_Precondition(Machine(Player),accept_insurance)==(btrue);
-  List_Precondition(Machine(Player),reject_insurance)==(btrue);
-  List_Precondition(Machine(Player),surrender)==(btrue);
+  List_Precondition(Machine(Player),player_hit)==(cc: CARDS*SUITS & player_bet/=0 & cc/:player_cards);
+  List_Precondition(Machine(Player),player_stand)==(player_bet/=0);
+  List_Precondition(Machine(Player),double_down)==(player_bet/=0);
+  List_Precondition(Machine(Player),split)==(player_bet/=0);
+  List_Precondition(Machine(Player),accept_insurance)==(player_bet/=0);
+  List_Precondition(Machine(Player),reject_insurance)==(player_bet/=0);
+  List_Precondition(Machine(Player),surrender)==(player_bet/=0);
   List_Precondition(Machine(Player),set_bet)==(bet: NAT)
 END
 &
 THEORY ListSubstitutionX IS
   Expanded_List_Substitution(Machine(Player),set_bet)==(bet: NAT | player_bet:=bet);
-  Expanded_List_Substitution(Machine(Player),surrender)==(btrue | player_cards:={});
-  Expanded_List_Substitution(Machine(Player),reject_insurance)==(btrue | player_cards:={});
-  Expanded_List_Substitution(Machine(Player),accept_insurance)==(btrue | player_cards:={});
-  Expanded_List_Substitution(Machine(Player),split)==(btrue | player_cards:={});
-  Expanded_List_Substitution(Machine(Player),double_down)==(btrue | player_cards:={});
-  Expanded_List_Substitution(Machine(Player),player_stand)==(btrue | player_cards:={});
-  Expanded_List_Substitution(Machine(Player),player_hit)==(cc: CARDS*SUITS | prj1(CARDS,SUITS)(cc) = ACE ==> (player_points+11>21 ==> player_points:=player_points+1 [] not(player_points+11>21) ==> player_points:=player_points+11) [] not(prj1(CARDS,SUITS)(cc) = ACE) ==> player_cards,player_points:=player_cards\/{cc},player_points+cards_points(prj1(CARDS,SUITS)(cc)));
-  List_Substitution(Machine(Player),player_hit)==(IF prj1(CARDS,SUITS)(cc) = ACE THEN IF player_points+11>21 THEN player_points:=player_points+1 ELSE player_points:=player_points+11 END ELSE player_cards:=player_cards\/{cc} || player_points:=player_points+cards_points(prj1(CARDS,SUITS)(cc)) END);
-  List_Substitution(Machine(Player),player_stand)==(player_cards:={});
-  List_Substitution(Machine(Player),double_down)==(player_cards:={});
-  List_Substitution(Machine(Player),split)==(player_cards:={});
-  List_Substitution(Machine(Player),accept_insurance)==(player_cards:={});
-  List_Substitution(Machine(Player),reject_insurance)==(player_cards:={});
-  List_Substitution(Machine(Player),surrender)==(player_cards:={});
+  Expanded_List_Substitution(Machine(Player),surrender)==(player_bet/=0 | skip);
+  Expanded_List_Substitution(Machine(Player),reject_insurance)==(player_bet/=0 | skip);
+  Expanded_List_Substitution(Machine(Player),accept_insurance)==(player_bet/=0 | skip);
+  Expanded_List_Substitution(Machine(Player),split)==(player_bet/=0 | skip);
+  Expanded_List_Substitution(Machine(Player),double_down)==(player_bet/=0 | skip);
+  Expanded_List_Substitution(Machine(Player),player_stand)==(player_bet/=0 | skip);
+  Expanded_List_Substitution(Machine(Player),player_hit)==(cc: CARDS*SUITS & player_bet/=0 & cc/:player_cards | player_cards:=player_cards\/{cc} || (total_points+cards_points(prj1(CARDS,SUITS)(cc))>21 ==> (ACE: dom(dom(player_points)) ==> @xx.(xx: dom(player_points) & prj1(CARDS,SUITS)(xx) = ACE & 11 = player_points(xx) ==> (prj1(CARDS,SUITS)(cc) = ACE ==> (total_points-10+11>21 ==> player_points,total_points:=player_points<+{xx|->1}\/{cc|->1},total_points-10+1 [] not(total_points-10+11>21) ==> player_points,total_points:=player_points<+{xx|->1}\/{cc|->11},total_points-10+11) [] not(prj1(CARDS,SUITS)(cc) = ACE) ==> player_points,total_points:=player_points<+{xx|->1}\/{cc|->cards_points(prj1(CARDS,SUITS)(cc))},total_points-10+cards_points(prj1(CARDS,SUITS)(cc)))) [] not(ACE: dom(dom(player_points))) ==> (prj1(CARDS,SUITS)(cc) = ACE ==> (total_points+11>21 ==> player_points,total_points:=player_points\/{cc|->1},total_points+1 [] not(total_points+11>21) ==> player_points,total_points:=player_points\/{cc|->11},total_points+11) [] not(prj1(CARDS,SUITS)(cc) = ACE) ==> player_points,total_points:=player_points\/{cc|->cards_points(prj1(CARDS,SUITS)(cc))},total_points+cards_points(prj1(CARDS,SUITS)(cc)))) [] not(total_points+cards_points(prj1(CARDS,SUITS)(cc))>21) ==> player_points,total_points:=player_points\/{cc|->cards_points(prj1(CARDS,SUITS)(cc))},total_points+cards_points(prj1(CARDS,SUITS)(cc))));
+  List_Substitution(Machine(Player),player_hit)==(player_cards:=player_cards\/{cc} || IF total_points+cards_points(prj1(CARDS,SUITS)(cc))>21 THEN IF ACE: dom(dom(player_points)) THEN ANY xx WHERE xx: dom(player_points) & prj1(CARDS,SUITS)(xx) = ACE & 11 = player_points(xx) THEN IF prj1(CARDS,SUITS)(cc) = ACE THEN IF total_points-10+11>21 THEN player_points:=player_points<+{xx|->1}\/{cc|->1} || total_points:=total_points-10+1 ELSE player_points:=player_points<+{xx|->1}\/{cc|->11} || total_points:=total_points-10+11 END ELSE player_points:=player_points<+{xx|->1}\/{cc|->cards_points(prj1(CARDS,SUITS)(cc))} || total_points:=total_points-10+cards_points(prj1(CARDS,SUITS)(cc)) END END ELSE IF prj1(CARDS,SUITS)(cc) = ACE THEN IF total_points+11>21 THEN player_points:=player_points\/{cc|->1} || total_points:=total_points+1 ELSE player_points:=player_points\/{cc|->11} || total_points:=total_points+11 END ELSE player_points:=player_points\/{cc|->cards_points(prj1(CARDS,SUITS)(cc))} || total_points:=total_points+cards_points(prj1(CARDS,SUITS)(cc)) END END ELSE player_points:=player_points\/{cc|->cards_points(prj1(CARDS,SUITS)(cc))} || total_points:=total_points+cards_points(prj1(CARDS,SUITS)(cc)) END);
+  List_Substitution(Machine(Player),player_stand)==(skip);
+  List_Substitution(Machine(Player),double_down)==(skip);
+  List_Substitution(Machine(Player),split)==(skip);
+  List_Substitution(Machine(Player),accept_insurance)==(skip);
+  List_Substitution(Machine(Player),reject_insurance)==(skip);
+  List_Substitution(Machine(Player),surrender)==(skip);
   List_Substitution(Machine(Player),set_bet)==(player_bet:=bet)
 END
 &
@@ -211,7 +211,7 @@ THEORY ListSeenInfoX IS
 END
 &
 THEORY ListANYVarX IS
-  List_ANY_Var(Machine(Player),player_hit)==(?);
+  List_ANY_Var(Machine(Player),player_hit)==(Var(xx) == etype(CARDS,?,?)*etype(SUITS,?,?));
   List_ANY_Var(Machine(Player),player_stand)==(?);
   List_ANY_Var(Machine(Player),double_down)==(?);
   List_ANY_Var(Machine(Player),split)==(?);
@@ -222,7 +222,7 @@ THEORY ListANYVarX IS
 END
 &
 THEORY ListOfIdsX IS
-  List_Of_Ids(Machine(Player)) == (? | ? | player_points,player_bet,player_cards | ? | player_hit,player_stand,double_down,split,accept_insurance,reject_insurance,surrender,set_bet | ? | seen(Machine(Cards)) | ? | Player);
+  List_Of_Ids(Machine(Player)) == (? | ? | total_points,player_points,player_bet,player_cards | ? | player_hit,player_stand,double_down,split,accept_insurance,reject_insurance,surrender,set_bet | ? | seen(Machine(Cards)) | ? | Player);
   List_Of_HiddenCst_Ids(Machine(Player)) == (? | ?);
   List_Of_VisibleCst_Ids(Machine(Player)) == (?);
   List_Of_VisibleVar_Ids(Machine(Player)) == (? | ?);
@@ -235,11 +235,12 @@ THEORY ListOfIdsX IS
 END
 &
 THEORY VariablesEnvX IS
-  Variables(Machine(Player)) == (Type(player_points) == Mvl(btype(INTEGER,?,?));Type(player_bet) == Mvl(btype(INTEGER,?,?));Type(player_cards) == Mvl(SetOf(etype(CARDS,?,?)*etype(SUITS,?,?))))
+  Variables(Machine(Player)) == (Type(total_points) == Mvl(btype(INTEGER,?,?));Type(player_points) == Mvl(SetOf(etype(CARDS,?,?)*etype(SUITS,?,?)*btype(INTEGER,?,?)));Type(player_bet) == Mvl(btype(INTEGER,?,?));Type(player_cards) == Mvl(SetOf(etype(CARDS,?,?)*etype(SUITS,?,?))))
 END
 &
 THEORY OperationsEnvX IS
-  Operations(Machine(Player)) == (Type(set_bet) == Cst(No_type,btype(INTEGER,?,?));Type(surrender) == Cst(No_type,No_type);Type(reject_insurance) == Cst(No_type,No_type);Type(accept_insurance) == Cst(No_type,No_type);Type(split) == Cst(No_type,No_type);Type(double_down) == Cst(No_type,No_type);Type(player_stand) == Cst(No_type,No_type);Type(player_hit) == Cst(No_type,etype(CARDS,?,?)*etype(SUITS,?,?)))
+  Operations(Machine(Player)) == (Type(set_bet) == Cst(No_type,btype(INTEGER,?,?));Type(surrender) == Cst(No_type,No_type);Type(reject_insurance) == Cst(No_type,No_type);Type(accept_insurance) == Cst(No_type,No_type);Type(split) == Cst(No_type,No_type);Type(double_down) == Cst(No_type,No_type);Type(player_stand) == Cst(No_type,No_type);Type(player_hit) == Cst(No_type,etype(CARDS,?,?)*etype(SUITS,?,?)));
+  Observers(Machine(Player)) == (Type(surrender) == Cst(No_type,No_type);Type(reject_insurance) == Cst(No_type,No_type);Type(accept_insurance) == Cst(No_type,No_type);Type(split) == Cst(No_type,No_type);Type(double_down) == Cst(No_type,No_type);Type(player_stand) == Cst(No_type,No_type))
 END
 &
 THEORY TCIntRdX IS

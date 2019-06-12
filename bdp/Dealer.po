@@ -7,7 +7,7 @@ END
 THEORY Formulas IS
 ((NAT) = (((0) .. (2147483647)))) & ((INT) = (((-2147483647) .. (2147483647))));
 ((1..13)*{CARDS}): FIN(NATURAL*{CARDS}) & not(((1..13)*{CARDS}) = {}) & ((1..4)*{SUITS}): FIN(NATURAL*{SUITS}) & not(((1..4)*{SUITS}) = {});
-((cards_points) : (((((1..13)*{CARDS})) <-> (((1) .. (11)))))) & player_cards : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS}))) & ((player_bet) : (NAT)) & ((player_points) : (NAT));
+((cards_points) : (((((1..13)*{CARDS})) <-> (NAT)))) & player_cards : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS}))) & ((player_bet) : (NAT)) & ((player_points) : ((((((1..13)*{CARDS}) * ((1..4)*{SUITS}))) <-> (NAT)))) & ((total_points) : (NAT));
 "Invariant is preserved";
 "Check invariant dealer_cards : POW( (CARDS * SUITS))";
 {} : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS})));
@@ -16,13 +16,26 @@ THEORY Formulas IS
 dealer_cards : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS}))) & ((dealer_points) : (NAT));
 ((cc) : ((((1..13)*{CARDS}) * ((1..4)*{SUITS})))) & (dealer_points <= 18) & (0 <= dealer_points);
 ((dealer_cards) \/ (({cc}))) : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS})));
-((cc) : ((((1..13)*{CARDS}) * ((1..4)*{SUITS}))));
+((cc) : ((((1..13)*{CARDS}) * ((1..4)*{SUITS})))) & not(player_bet = 0) & not(cc : player_cards);
+(21 +1 <= ((total_points - 10) + 11));
+not((21 +1 <= ((total_points - 10) + 11)));
 (((prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))) )(cc)) = ((1|->CARDS)));
 not((((prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))) )(cc)) = ((1|->CARDS))));
-btrue;
+((xx) : (dom(player_points)));
+(((prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))) )(xx)) = ((1|->CARDS)));
+((11) = ((player_points )(xx)));
+(((1|->CARDS)) : (dom(dom(player_points))));
+(21 +1 <= (total_points + 11));
+not((21 +1 <= (total_points + 11)));
+not((((1|->CARDS)) : (dom(dom(player_points)))));
+(21 +1 <= (total_points + (cards_points )((prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))) )(cc))));
+not((21 +1 <= (total_points + (cards_points )((prj1(((((1..13)*{CARDS})) , (((1..4)*{SUITS})))) )(cc)))));
+not(player_bet = 0);
 ((bet) : (NAT));
+btrue;
 dealer_cards : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS})));
-(dealer_points <= 18)
+(dealer_points <= 18);
+((cc) : ((((1..13)*{CARDS}) * ((1..4)*{SUITS}))))
 END
 &
 THEORY EnumerateX IS

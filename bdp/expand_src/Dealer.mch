@@ -11,7 +11,6 @@ INITIALISATION dealer_cards := {} || dealer_points := 0
 OPERATIONS
     dealer_hit ( cc ) =
     PRE cc : CARDS * SUITS & dealer_points <= 18 & dealer_points >= 0
-    THEN
-        dealer_cards := dealer_cards \/ { cc }
+    THEN dealer_cards := dealer_cards \/ { cc }
     END
 END

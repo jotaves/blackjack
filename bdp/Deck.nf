@@ -56,7 +56,7 @@ THEORY ListInvariantX IS
   Gluing_List_Invariant(Machine(Deck))==(btrue);
   Expanded_List_Invariant(Machine(Deck))==(btrue);
   Abstract_List_Invariant(Machine(Deck))==(btrue);
-  Context_List_Invariant(Machine(Deck))==(cards_points: CARDS <-> 1..11);
+  Context_List_Invariant(Machine(Deck))==(cards_points: CARDS <-> NAT);
   List_Invariant(Machine(Deck))==(deck <: CARDS*SUITS)
 END
 &

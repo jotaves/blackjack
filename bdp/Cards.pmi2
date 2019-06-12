@@ -1,12 +1,16 @@
 THEORY BalanceX IS
-Cards,0,0,0,0,0,0,0
+Cards,1,0,0,0,0,0,0;
+Initialisation,1,0,0,0,0,0,0
 END
 &
-THEORY ProofState
+THEORY ProofState IS
+Unproved
 END
 &
-THEORY MethodList
+THEORY MethodList IS
+?
 END
 &
-THEORY PassList
+THEORY PassList IS
+Force(0),?
 END

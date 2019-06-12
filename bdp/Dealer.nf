@@ -56,7 +56,7 @@ THEORY ListInvariantX IS
   Gluing_List_Invariant(Machine(Dealer))==(btrue);
   Expanded_List_Invariant(Machine(Dealer))==(btrue);
   Abstract_List_Invariant(Machine(Dealer))==(btrue);
-  Context_List_Invariant(Machine(Dealer))==(cards_points: CARDS <-> 1..11 & player_cards <: CARDS*SUITS & player_bet: NAT & player_points: NAT);
+  Context_List_Invariant(Machine(Dealer))==(cards_points: CARDS <-> NAT & player_cards <: CARDS*SUITS & player_bet: NAT & player_points: CARDS*SUITS <-> NAT & total_points: NAT);
   List_Invariant(Machine(Dealer))==(dealer_cards <: CARDS*SUITS & dealer_points: NAT)
 END
 &
@@ -161,26 +161,26 @@ END
 THEORY ListSeenInfoX IS
   Seen_Internal_List_Operations(Machine(Dealer),Machine(Player))==(player_hit,player_stand,double_down,split,accept_insurance,reject_insurance,surrender,set_bet);
   Seen_Context_List_Enumerated(Machine(Dealer))==(CARDS,SUITS);
-  Seen_Context_List_Invariant(Machine(Dealer))==(cards_points: CARDS <-> 1..11);
+  Seen_Context_List_Invariant(Machine(Dealer))==(cards_points: CARDS <-> NAT);
   Seen_Context_List_Assertions(Machine(Dealer))==(btrue);
   Seen_Context_List_Properties(Machine(Dealer))==(CARDS: FIN(INTEGER) & not(CARDS = {}) & SUITS: FIN(INTEGER) & not(SUITS = {}));
   Seen_List_Constraints(Machine(Dealer))==(btrue);
   Seen_List_Precondition(Machine(Dealer),set_bet)==(bet: NAT);
   Seen_Expanded_List_Substitution(Machine(Dealer),set_bet)==(player_bet:=bet);
-  Seen_List_Precondition(Machine(Dealer),surrender)==(btrue);
-  Seen_Expanded_List_Substitution(Machine(Dealer),surrender)==(player_cards:={});
-  Seen_List_Precondition(Machine(Dealer),reject_insurance)==(btrue);
-  Seen_Expanded_List_Substitution(Machine(Dealer),reject_insurance)==(player_cards:={});
-  Seen_List_Precondition(Machine(Dealer),accept_insurance)==(btrue);
-  Seen_Expanded_List_Substitution(Machine(Dealer),accept_insurance)==(player_cards:={});
-  Seen_List_Precondition(Machine(Dealer),split)==(btrue);
-  Seen_Expanded_List_Substitution(Machine(Dealer),split)==(player_cards:={});
-  Seen_List_Precondition(Machine(Dealer),double_down)==(btrue);
-  Seen_Expanded_List_Substitution(Machine(Dealer),double_down)==(player_cards:={});
-  Seen_List_Precondition(Machine(Dealer),player_stand)==(btrue);
-  Seen_Expanded_List_Substitution(Machine(Dealer),player_stand)==(player_cards:={});
-  Seen_List_Precondition(Machine(Dealer),player_hit)==(cc: CARDS*SUITS);
-  Seen_Expanded_List_Substitution(Machine(Dealer),player_hit)==(prj1(CARDS,SUITS)(cc) = ACE ==> player_points:=player_points+1 [] not(prj1(CARDS,SUITS)(cc) = ACE) ==> player_cards,player_points:=player_cards\/{cc},player_points+cards_points(prj1(CARDS,SUITS)(cc)));
+  Seen_List_Precondition(Machine(Dealer),surrender)==(player_bet/=0);
+  Seen_Expanded_List_Substitution(Machine(Dealer),surrender)==(skip);
+  Seen_List_Precondition(Machine(Dealer),reject_insurance)==(player_bet/=0);
+  Seen_Expanded_List_Substitution(Machine(Dealer),reject_insurance)==(skip);
+  Seen_List_Precondition(Machine(Dealer),accept_insurance)==(player_bet/=0);
+  Seen_Expanded_List_Substitution(Machine(Dealer),accept_insurance)==(skip);
+  Seen_List_Precondition(Machine(Dealer),split)==(player_bet/=0);
+  Seen_Expanded_List_Substitution(Machine(Dealer),split)==(skip);
+  Seen_List_Precondition(Machine(Dealer),double_down)==(player_bet/=0);
+  Seen_Expanded_List_Substitution(Machine(Dealer),double_down)==(skip);
+  Seen_List_Precondition(Machine(Dealer),player_stand)==(player_bet/=0);
+  Seen_Expanded_List_Substitution(Machine(Dealer),player_stand)==(skip);
+  Seen_List_Precondition(Machine(Dealer),player_hit)==(cc: CARDS*SUITS & player_bet/=0 & cc/:player_cards);
+  Seen_Expanded_List_Substitution(Machine(Dealer),player_hit)==(player_cards:=player_cards\/{cc} || (total_points+cards_points(prj1(CARDS,SUITS)(cc))>21 ==> (ACE: dom(dom(player_points)) ==> @xx.(xx: dom(player_points) & prj1(CARDS,SUITS)(xx) = ACE & 11 = player_points(xx) ==> (prj1(CARDS,SUITS)(cc) = ACE ==> (total_points-10+11>21 ==> player_points,total_points:=player_points<+{xx|->1}\/{cc|->1},total_points-10+1 [] not(total_points-10+11>21) ==> player_points,total_points:=player_points<+{xx|->1}\/{cc|->11},total_points-10+11) [] not(prj1(CARDS,SUITS)(cc) = ACE) ==> player_points,total_points:=player_points<+{xx|->1}\/{cc|->cards_points(prj1(CARDS,SUITS)(cc))},total_points-10+cards_points(prj1(CARDS,SUITS)(cc)))) [] not(ACE: dom(dom(player_points))) ==> (prj1(CARDS,SUITS)(cc) = ACE ==> (total_points+11>21 ==> player_points,total_points:=player_points\/{cc|->1},total_points+1 [] not(total_points+11>21) ==> player_points,total_points:=player_points\/{cc|->11},total_points+11) [] not(prj1(CARDS,SUITS)(cc) = ACE) ==> player_points,total_points:=player_points\/{cc|->cards_points(prj1(CARDS,SUITS)(cc))},total_points+cards_points(prj1(CARDS,SUITS)(cc)))) [] not(total_points+cards_points(prj1(CARDS,SUITS)(cc))>21) ==> player_points,total_points:=player_points\/{cc|->cards_points(prj1(CARDS,SUITS)(cc))},total_points+cards_points(prj1(CARDS,SUITS)(cc))));
   Seen_List_Operations(Machine(Dealer),Machine(Player))==(player_hit,player_stand,double_down,split,accept_insurance,reject_insurance,surrender,set_bet);
   Seen_Expanded_List_Invariant(Machine(Dealer),Machine(Player))==(btrue);
   Set_Definition(Machine(Dealer),SUITS)==({HEART,DIAMOND,CLUB,SPADE});
@@ -200,7 +200,7 @@ THEORY ListOfIdsX IS
   List_Of_VisibleCst_Ids(Machine(Dealer)) == (?);
   List_Of_VisibleVar_Ids(Machine(Dealer)) == (? | ?);
   List_Of_Ids_SeenBNU(Machine(Dealer)) == (?: ?);
-  List_Of_Ids(Machine(Player)) == (? | ? | player_points,player_bet,player_cards | ? | player_hit,player_stand,double_down,split,accept_insurance,reject_insurance,surrender,set_bet | ? | seen(Machine(Cards)) | ? | Player);
+  List_Of_Ids(Machine(Player)) == (? | ? | total_points,player_points,player_bet,player_cards | ? | player_hit,player_stand,double_down,split,accept_insurance,reject_insurance,surrender,set_bet | ? | seen(Machine(Cards)) | ? | Player);
   List_Of_HiddenCst_Ids(Machine(Player)) == (? | ?);
   List_Of_VisibleCst_Ids(Machine(Player)) == (?);
   List_Of_VisibleVar_Ids(Machine(Player)) == (? | ?);

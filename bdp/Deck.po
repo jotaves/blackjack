@@ -5,7 +5,7 @@ END
 THEORY Formulas IS
 ((NAT) = (((0) .. (2147483647)))) & ((INT) = (((-2147483647) .. (2147483647))));
 ((1..13)*{CARDS}): FIN(NATURAL*{CARDS}) & not(((1..13)*{CARDS}) = {}) & ((1..4)*{SUITS}): FIN(NATURAL*{SUITS}) & not(((1..4)*{SUITS}) = {});
-((cards_points) : (((((1..13)*{CARDS})) <-> (((1) .. (11))))));
+((cards_points) : (((((1..13)*{CARDS})) <-> (NAT))));
 "Invariant is preserved";
 (((1..13)*{CARDS}) * ((1..4)*{SUITS})) : POW( (((1..13)*{CARDS}) * ((1..4)*{SUITS})));
 btrue

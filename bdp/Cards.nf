@@ -57,7 +57,7 @@ THEORY ListInvariantX IS
   Expanded_List_Invariant(Machine(Cards))==(btrue);
   Abstract_List_Invariant(Machine(Cards))==(btrue);
   Context_List_Invariant(Machine(Cards))==(btrue);
-  List_Invariant(Machine(Cards))==(cards_points: CARDS <-> 1..11)
+  List_Invariant(Machine(Cards))==(cards_points: CARDS <-> NAT)
 END
 &
 THEORY ListAssertionsX IS
@@ -76,9 +76,9 @@ THEORY ListExclusivityX IS
 END
 &
 THEORY ListInitialisationX IS
-  Expanded_List_Initialisation(Machine(Cards))==(cards_points:={ACE}*{1,11}\/{TWO|->2,THREE|->3,FOUR|->4,FIVE|->5,SIX|->6,SEVEN|->7,EIGHT|->8,NINE|->9}\/{TEN,JACK,QUEEN,KING}*{10});
+  Expanded_List_Initialisation(Machine(Cards))==(cards_points:={ACE|->11,TWO|->2,THREE|->3,FOUR|->4,FIVE|->5,SIX|->6,SEVEN|->7,EIGHT|->8,NINE|->9}\/{TEN,JACK,QUEEN,KING}*{10});
   Context_List_Initialisation(Machine(Cards))==(skip);
-  List_Initialisation(Machine(Cards))==(cards_points:={ACE}*{1,11}\/{TWO|->2,THREE|->3,FOUR|->4,FIVE|->5,SIX|->6,SEVEN|->7,EIGHT|->8,NINE|->9}\/{TEN,JACK,QUEEN,KING}*{10})
+  List_Initialisation(Machine(Cards))==(cards_points:={ACE|->11,TWO|->2,THREE|->3,FOUR|->4,FIVE|->5,SIX|->6,SEVEN|->7,EIGHT|->8,NINE|->9}\/{TEN,JACK,QUEEN,KING}*{10})
 END
 &
 THEORY ListParametersX IS

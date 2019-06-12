@@ -38,8 +38,8 @@ THEORY ListVariablesX IS
   Context_List_Variables(Machine(Game))==(?);
   Abstract_List_Variables(Machine(Game))==(?);
   Local_List_Variables(Machine(Game))==(current_player,game_cards);
-  List_Variables(Machine(Game))==(current_player,game_cards,player_points,player_bet,player_cards,dealer_points,dealer_cards);
-  External_List_Variables(Machine(Game))==(current_player,game_cards,player_points,player_bet,player_cards,dealer_points,dealer_cards)
+  List_Variables(Machine(Game))==(current_player,game_cards,total_points,player_points,player_bet,player_cards,dealer_points,dealer_cards);
+  External_List_Variables(Machine(Game))==(current_player,game_cards,total_points,player_points,player_bet,player_cards,dealer_points,dealer_cards)
 END
 &
 THEORY ListVisibleVariablesX IS
@@ -55,8 +55,8 @@ THEORY ListInvariantX IS
   Gluing_Seen_List_Invariant(Machine(Game))==(btrue);
   Gluing_List_Invariant(Machine(Game))==(btrue);
   Abstract_List_Invariant(Machine(Game))==(btrue);
-  Expanded_List_Invariant(Machine(Game))==(player_cards <: CARDS*SUITS & player_bet: NAT & player_points: NAT & dealer_cards <: CARDS*SUITS & dealer_points: NAT);
-  Context_List_Invariant(Machine(Game))==(cards_points: CARDS <-> 1..11);
+  Expanded_List_Invariant(Machine(Game))==(player_cards <: CARDS*SUITS & player_bet: NAT & player_points: CARDS*SUITS <-> NAT & total_points: NAT & dealer_cards <: CARDS*SUITS & dealer_points: NAT);
+  Context_List_Invariant(Machine(Game))==(cards_points: CARDS <-> NAT);
   List_Invariant(Machine(Game))==(game_cards <: CARDS*SUITS & current_player: PLAYER_TYPE)
 END
 &
@@ -76,7 +76,7 @@ THEORY ListExclusivityX IS
 END
 &
 THEORY ListInitialisationX IS
-  Expanded_List_Initialisation(Machine(Game))==(player_cards,player_bet,player_points:={},0,0;dealer_cards,dealer_points:={},0;game_cards,current_player:=CARDS*SUITS,PLAYER);
+  Expanded_List_Initialisation(Machine(Game))==(player_cards,player_bet,player_points,total_points:={},0,{},0;dealer_cards,dealer_points:={},0;game_cards,current_player:=CARDS*SUITS,PLAYER);
   Context_List_Initialisation(Machine(Game))==(skip);
   List_Initialisation(Machine(Game))==(game_cards:=CARDS*SUITS || current_player:=PLAYER)
 END
@@ -100,37 +100,43 @@ THEORY ListConstraintsX IS
 END
 &
 THEORY ListOperationsX IS
-  Internal_List_Operations(Machine(Game))==(hit_action,stand_action);
-  List_Operations(Machine(Game))==(hit_action,stand_action)
+  Internal_List_Operations(Machine(Game))==(hit_action,stand_action,set_bet_action);
+  List_Operations(Machine(Game))==(hit_action,stand_action,set_bet_action)
 END
 &
 THEORY ListInputX IS
   List_Input(Machine(Game),hit_action)==(?);
-  List_Input(Machine(Game),stand_action)==(?)
+  List_Input(Machine(Game),stand_action)==(?);
+  List_Input(Machine(Game),set_bet_action)==(bet)
 END
 &
 THEORY ListOutputX IS
   List_Output(Machine(Game),hit_action)==(?);
-  List_Output(Machine(Game),stand_action)==(?)
+  List_Output(Machine(Game),stand_action)==(?);
+  List_Output(Machine(Game),set_bet_action)==(?)
 END
 &
 THEORY ListHeaderX IS
   List_Header(Machine(Game),hit_action)==(hit_action);
-  List_Header(Machine(Game),stand_action)==(stand_action)
+  List_Header(Machine(Game),stand_action)==(stand_action);
+  List_Header(Machine(Game),set_bet_action)==(set_bet_action(bet))
 END
 &
 THEORY ListOperationGuardX END
 &
 THEORY ListPreconditionX IS
-  List_Precondition(Machine(Game),hit_action)==(btrue);
-  List_Precondition(Machine(Game),stand_action)==(player_points<=21 & player_points>=0)
+  List_Precondition(Machine(Game),hit_action)==(player_bet/=0);
+  List_Precondition(Machine(Game),stand_action)==(SIGMA(zz).(zz: ran(player_points) | zz)<=21 & SIGMA(zz).(zz: ran(player_points) | zz)>=0 & player_bet/=0);
+  List_Precondition(Machine(Game),set_bet_action)==(bet: NAT)
 END
 &
 THEORY ListSubstitutionX IS
-  Expanded_List_Substitution(Machine(Game),stand_action)==(player_points<=21 & player_points>=0 | current_player:=DEALER || @cc.(cc: CARDS*SUITS ==> (cc: CARDS*SUITS & dealer_points<=18 & dealer_points>=0 | game_cards:=game_cards-{cc} || dealer_cards:=dealer_cards\/{cc})));
-  Expanded_List_Substitution(Machine(Game),hit_action)==(btrue | @cc.(cc: CARDS*SUITS ==> (cc: CARDS*SUITS | game_cards:=game_cards-{cc} || (prj1(CARDS,SUITS)(cc) = ACE ==> player_points:=player_points+1 [] not(prj1(CARDS,SUITS)(cc) = ACE) ==> player_cards,player_points:=player_cards\/{cc},player_points+cards_points(prj1(CARDS,SUITS)(cc))))));
-  List_Substitution(Machine(Game),hit_action)==(ANY cc WHERE cc: CARDS*SUITS THEN game_cards:=game_cards-{cc} || player_hit(cc) END);
-  List_Substitution(Machine(Game),stand_action)==(current_player:=DEALER || ANY cc WHERE cc: CARDS*SUITS THEN game_cards:=game_cards-{cc} || dealer_hit(cc) END)
+  Expanded_List_Substitution(Machine(Game),set_bet_action)==(bet: NAT | player_bet:=bet);
+  Expanded_List_Substitution(Machine(Game),stand_action)==(SIGMA(zz).(zz: ran(player_points) | zz)<=21 & SIGMA(zz).(zz: ran(player_points) | zz)>=0 & player_bet/=0 | current_player:=DEALER || @cc.(cc: CARDS*SUITS ==> (cc: CARDS*SUITS & dealer_points<=18 & dealer_points>=0 | game_cards:=game_cards-{cc} || dealer_cards:=dealer_cards\/{cc})));
+  Expanded_List_Substitution(Machine(Game),hit_action)==(player_bet/=0 | @cc.(cc: game_cards ==> (cc: CARDS*SUITS & player_bet/=0 & cc/:player_cards | game_cards:=game_cards-{cc} || (player_cards:=player_cards\/{cc} || (total_points+cards_points(prj1(CARDS,SUITS)(cc))>21 ==> (ACE: dom(dom(player_points)) ==> @xx.(xx: dom(player_points) & prj1(CARDS,SUITS)(xx) = ACE & 11 = player_points(xx) ==> (prj1(CARDS,SUITS)(cc) = ACE ==> (total_points-10+11>21 ==> player_points,total_points:=player_points<+{xx|->1}\/{cc|->1},total_points-10+1 [] not(total_points-10+11>21) ==> player_points,total_points:=player_points<+{xx|->1}\/{cc|->11},total_points-10+11) [] not(prj1(CARDS,SUITS)(cc) = ACE) ==> player_points,total_points:=player_points<+{xx|->1}\/{cc|->cards_points(prj1(CARDS,SUITS)(cc))},total_points-10+cards_points(prj1(CARDS,SUITS)(cc)))) [] not(ACE: dom(dom(player_points))) ==> (prj1(CARDS,SUITS)(cc) = ACE ==> (total_points+11>21 ==> player_points,total_points:=player_points\/{cc|->1},total_points+1 [] not(total_points+11>21) ==> player_points,total_points:=player_points\/{cc|->11},total_points+11) [] not(prj1(CARDS,SUITS)(cc) = ACE) ==> player_points,total_points:=player_points\/{cc|->cards_points(prj1(CARDS,SUITS)(cc))},total_points+cards_points(prj1(CARDS,SUITS)(cc)))) [] not(total_points+cards_points(prj1(CARDS,SUITS)(cc))>21) ==> player_points,total_points:=player_points\/{cc|->cards_points(prj1(CARDS,SUITS)(cc))},total_points+cards_points(prj1(CARDS,SUITS)(cc)))))));
+  List_Substitution(Machine(Game),hit_action)==(ANY cc WHERE cc: game_cards THEN game_cards:=game_cards-{cc} || player_hit(cc) END);
+  List_Substitution(Machine(Game),stand_action)==(current_player:=DEALER || ANY cc WHERE cc: CARDS*SUITS THEN game_cards:=game_cards-{cc} || dealer_hit(cc) END);
+  List_Substitution(Machine(Game),set_bet_action)==(set_bet(bet))
 END
 &
 THEORY ListConstantsX IS
@@ -185,21 +191,22 @@ END
 &
 THEORY ListANYVarX IS
   List_ANY_Var(Machine(Game),hit_action)==(Var(cc) == etype(CARDS,?,?)*etype(SUITS,?,?));
-  List_ANY_Var(Machine(Game),stand_action)==(Var(cc) == etype(CARDS,?,?)*etype(SUITS,?,?))
+  List_ANY_Var(Machine(Game),stand_action)==(Var(cc) == etype(CARDS,?,?)*etype(SUITS,?,?));
+  List_ANY_Var(Machine(Game),set_bet_action)==(?)
 END
 &
 THEORY ListOfIdsX IS
-  List_Of_Ids(Machine(Game)) == (? | ? | current_player,game_cards | dealer_points,dealer_cards,player_points,player_bet,player_cards | hit_action,stand_action | ? | seen(Machine(Cards)),seen(Machine(Game_ctx)),included(Machine(Player)),included(Machine(Dealer)) | ? | Game);
+  List_Of_Ids(Machine(Game)) == (? | ? | current_player,game_cards | dealer_points,dealer_cards,total_points,player_points,player_bet,player_cards | hit_action,stand_action,set_bet_action | ? | seen(Machine(Cards)),seen(Machine(Game_ctx)),included(Machine(Player)),included(Machine(Dealer)) | ? | Game);
   List_Of_HiddenCst_Ids(Machine(Game)) == (? | ?);
   List_Of_VisibleCst_Ids(Machine(Game)) == (?);
   List_Of_VisibleVar_Ids(Machine(Game)) == (? | ?);
-  List_Of_Ids_SeenBNU(Machine(Game)) == (seen(Machine(Cards)): (CARDS,SUITS,ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,TEN,JACK,QUEEN,KING,HEART,DIAMOND,CLUB,SPADE | ? | cards_points | ? | ? | ? | ? | ? | ?) | seen(Machine(Player)): (? | ? | player_points,player_bet,player_cards | ? | ? | ? | ? | ? | ?));
+  List_Of_Ids_SeenBNU(Machine(Game)) == (seen(Machine(Cards)): (CARDS,SUITS,ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,TEN,JACK,QUEEN,KING,HEART,DIAMOND,CLUB,SPADE | ? | cards_points | ? | ? | ? | ? | ? | ?) | seen(Machine(Player)): (? | ? | total_points,player_points,player_bet,player_cards | ? | ? | ? | ? | ? | ?));
   List_Of_Ids(Machine(Dealer)) == (? | ? | dealer_points,dealer_cards | ? | dealer_hit | ? | seen(Machine(Cards)),seen(Machine(Player)) | ? | Dealer);
   List_Of_HiddenCst_Ids(Machine(Dealer)) == (? | ?);
   List_Of_VisibleCst_Ids(Machine(Dealer)) == (?);
   List_Of_VisibleVar_Ids(Machine(Dealer)) == (? | ?);
   List_Of_Ids_SeenBNU(Machine(Dealer)) == (?: ?);
-  List_Of_Ids(Machine(Player)) == (? | ? | player_points,player_bet,player_cards | ? | player_hit,player_stand,double_down,split,accept_insurance,reject_insurance,surrender,set_bet | ? | seen(Machine(Cards)) | ? | Player);
+  List_Of_Ids(Machine(Player)) == (? | ? | total_points,player_points,player_bet,player_cards | ? | player_hit,player_stand,double_down,split,accept_insurance,reject_insurance,surrender,set_bet | ? | seen(Machine(Cards)) | ? | Player);
   List_Of_HiddenCst_Ids(Machine(Player)) == (? | ?);
   List_Of_VisibleCst_Ids(Machine(Player)) == (?);
   List_Of_VisibleVar_Ids(Machine(Player)) == (? | ?);
@@ -217,11 +224,11 @@ THEORY ListOfIdsX IS
 END
 &
 THEORY VariablesEnvX IS
-  Variables(Machine(Game)) == (Type(player_cards) == Mvl(SetOf(etype(CARDS,?,?)*etype(SUITS,?,?)));Type(player_bet) == Mvl(btype(INTEGER,?,?));Type(player_points) == Mvl(btype(INTEGER,?,?));Type(dealer_cards) == Mvl(SetOf(etype(CARDS,?,?)*etype(SUITS,?,?)));Type(dealer_points) == Mvl(btype(INTEGER,?,?));Type(current_player) == Mvl(etype(PLAYER_TYPE,?,?));Type(game_cards) == Mvl(SetOf(etype(CARDS,?,?)*etype(SUITS,?,?))))
+  Variables(Machine(Game)) == (Type(player_cards) == Mvl(SetOf(etype(CARDS,?,?)*etype(SUITS,?,?)));Type(player_bet) == Mvl(btype(INTEGER,?,?));Type(player_points) == Mvl(SetOf(etype(CARDS,?,?)*etype(SUITS,?,?)*btype(INTEGER,?,?)));Type(total_points) == Mvl(btype(INTEGER,?,?));Type(dealer_cards) == Mvl(SetOf(etype(CARDS,?,?)*etype(SUITS,?,?)));Type(dealer_points) == Mvl(btype(INTEGER,?,?));Type(current_player) == Mvl(etype(PLAYER_TYPE,?,?));Type(game_cards) == Mvl(SetOf(etype(CARDS,?,?)*etype(SUITS,?,?))))
 END
 &
 THEORY OperationsEnvX IS
-  Operations(Machine(Game)) == (Type(stand_action) == Cst(No_type,No_type);Type(hit_action) == Cst(No_type,No_type))
+  Operations(Machine(Game)) == (Type(set_bet_action) == Cst(No_type,btype(INTEGER,?,?));Type(stand_action) == Cst(No_type,No_type);Type(hit_action) == Cst(No_type,No_type))
 END
 &
 THEORY TCIntRdX IS

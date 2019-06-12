@@ -1,14 +1,8 @@
 ﻿THEORY BalanceX IS
-  Player,17,0,0,11,0,0,0;
-  Initialisation,2,0,0,2,0,0,0;
-  WellDefinedness_player_hit,6,0,0,2,0,0,0;
-  accept_insurance,1,0,0,1,0,0,0;
-  double_down,1,0,0,1,0,0,0;
-  player_hit,3,0,0,1,0,0,0;
-  player_stand,1,0,0,1,0,0,0;
-  reject_insurance,1,0,0,1,0,0,0;
-  split,1,0,0,1,0,0,0;
-  surrender,1,0,0,1,0,0,0
+  Player,47,0,0,24,0,0,0;
+  Initialisation,3,0,0,3,0,0,0;
+  WellDefinedness_player_hit,23,0,0,7,0,0,0;
+  player_hit,21,0,0,14,0,0,0
 END
 &
 THEORY ProofState IS
@@ -17,16 +11,46 @@ THEORY ProofState IS
   Unproved;
   Proved(0);
   Unproved;
+  Unproved;
+  Unproved;
   Proved(0);
+  Unproved;
   Proved(0);
+  Unproved;
+  Unproved;
+  Unproved;
   Proved(0);
+  Unproved;
+  Proved(0);
+  Unproved;
+  Unproved;
+  Proved(0);
+  Unproved;
+  Unproved;
+  Unproved;
+  Proved(0);
+  Unproved;
+  Unproved;
+  Proved(0);
+  Unproved;
+  Unproved;
   Proved(0);
   Proved(0);
   Proved(0);
   Proved(0);
   Unproved;
   Proved(0);
+  Proved(0);
   Unproved;
+  Unproved;
+  Proved(0);
+  Proved(0);
+  Proved(0);
+  Proved(0);
+  Proved(0);
+  Proved(0);
+  Proved(0);
+  Proved(0);
   Proved(0);
   Proved(0)
 END
@@ -37,16 +61,46 @@ THEORY MethodList IS
   ?;
   pr;
   ?;
+  ?;
+  ?;
   pr;
+  ?;
   pr;
+  ?;
+  ?;
+  ?;
   pr;
+  ?;
+  pr;
+  ?;
+  ?;
+  pr;
+  ?;
+  ?;
+  ?;
+  pr;
+  ?;
+  ?;
+  pr;
+  ?;
+  ?;
   pr;
   pr;
   pr;
   pr;
   ?;
   pr;
+  pr;
   ?;
+  ?;
+  pr;
+  pr;
+  pr;
+  pr;
+  pr;
+  pr;
+  pr;
+  pr;
   pr;
   pr
 END
@@ -57,16 +111,46 @@ THEORY PassList IS
   Force(0),(?;0;1;2;3);
   Force(0),?;
   Force(0),(?;0;1;2;3);
+  Force(0),(?;0;1;2;3);
+  Force(0),(?;0;1;2;3);
   Force(0),?;
+  Force(0),(?;0;1;2;3);
   Force(0),?;
+  Force(0),(?;0;1;2;3);
+  Force(0),(?;0;1;2;3);
+  Force(0),(?;0;1;2;3);
   Force(0),?;
+  Force(0),(?;0;1;2;3);
+  Force(0),?;
+  Force(0),(?;0;1;2;3);
+  Force(0),(?;0;1;2;3);
+  Force(0),?;
+  Force(0),(?;0;1;2;3);
+  Force(0),(?;0;1;2;3);
+  Force(0),(?;0;1;2;3);
+  Force(0),?;
+  Force(0),(?;0;1;2;3);
+  Force(0),(?;0;1;2;3);
+  Force(0),?;
+  Force(0),(?;0;1;2;3);
+  Force(0),(?;0;1;2;3);
   Force(0),?;
   Force(0),?;
   Force(0),?;
   Force(0),?;
   Force(0),(?;0;1;2;3);
   Force(0),?;
+  Force(0),?;
   Force(0),(?;0;1;2;3);
+  Force(0),(?;0;1;2;3);
+  Force(0),?;
+  Force(0),?;
+  Force(0),?;
+  Force(0),?;
+  Force(0),?;
+  Force(0),?;
+  Force(0),?;
+  Force(0),?;
   Force(0),?;
   Force(0),?
 END
