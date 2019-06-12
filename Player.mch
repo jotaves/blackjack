@@ -6,7 +6,7 @@ MACHINE
     Player
 SEES Cards
 VARIABLES player_cards, player_bet, player_points, total_points
-INVARIANT player_cards <: CARDS * SUITS & player_bet : NAT & player_points : (CARDS * SUITS) <-> NAT & total_points : NAT
+INVARIANT player_cards <: CARDS * SUITS & player_bet : NAT & player_points : (CARDS * SUITS) <-> NAT & total_points : NAT & total_points = SIGMA zz . (zz : player_points | prj2((CARDS * SUITS), NAT)(zz))
 INITIALISATION player_cards := {} || player_bet := 0 || player_points := {} || total_points := 0
 OPERATIONS
     player_hit(cc) = 
