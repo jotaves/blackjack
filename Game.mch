@@ -23,7 +23,7 @@ OPERATIONS
     PRE player_bet /= 0 & dealer_can_start = FALSE & dealer_can_hit = TRUE
     THEN player_stand ||
         ANY cc
-        WHERE cc \/ dealer_cards <: CARDS * SUITS & (SIGMA zz . (zz : cc \/ dealer_cards | cards_points(prj1(CARDS, SUITS)(zz))) > 16)
+        WHERE cc <: game_cards & cc \/ dealer_cards <: game_cards & (SIGMA zz . (zz : cc \/ dealer_cards | cards_points(prj1(CARDS, SUITS)(zz))) > 16)
         THEN game_cards := game_cards - cc || dealer_hit(cc)
         END
     END;
