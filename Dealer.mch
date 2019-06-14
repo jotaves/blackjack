@@ -5,12 +5,12 @@
 MACHINE
     Dealer
 SEES Cards, Game_ctx
-VARIABLES dealer_cards, dealer_points, dealer_points_sum
-INVARIANT dealer_cards <: CARDS * SUITS & dealer_points : (CARDS * SUITS) <-> NAT & dealer_points_sum : NAT
-INITIALISATION dealer_cards := {} || dealer_points := {} || dealer_points_sum := 0
+VARIABLES dealer_cards, dealer_points, dealer_points_sum, dealer_has_start, dealer_has_stand
+INVARIANT dealer_cards <: CARDS * SUITS & dealer_points : (CARDS * SUITS) <-> NAT & dealer_points_sum : NAT & dealer_has_start : BOOL & dealer_has_stand : BOOL
+INITIALISATION dealer_cards := {} || dealer_points := {} || dealer_points_sum := 0 || dealer_has_start := FALSE || dealer_has_stand := FALSE
 OPERATIONS
     dealer_hit(cc) = 
-    PRE cc : CARDS * SUITS & cc /: dealer_cards
+    PRE cc : CARDS * SUITS & cc /: dealer_cards & dealer_has_start = TRUE & dealer_has_stand = FALSE
     THEN dealer_cards := dealer_cards \/ {cc} 
 	// SE AO ADICIONAR A CARTA NOVA DER MAIS QUE 21
 	|| IF dealer_points_sum  + cards_points(prj1(CARDS, SUITS)(cc)) > 21
@@ -49,12 +49,12 @@ OPERATIONS
     END;
 
     dealer_stand =
-    PRE dealer_points_sum > 21
-    THEN skip
+    PRE dealer_has_start = TRUE & dealer_has_stand = FALSE
+    THEN dealer_has_stand := TRUE
     END;
 
     dealer_init(cc) = 
     PRE cc : CARDS * SUITS & card(dealer_cards) = 0
-    THEN dealer_cards := {cc} || dealer_points := dealer_points \/ {(cc |-> cards_points(prj1(CARDS, SUITS)(cc)))} || dealer_points_sum := cards_points(prj1(CARDS, SUITS)(cc))
+    THEN dealer_cards := {cc} || dealer_points := dealer_points \/ {(cc |-> cards_points(prj1(CARDS, SUITS)(cc)))} || dealer_points_sum := cards_points(prj1(CARDS, SUITS)(cc)) || dealer_has_start := TRUE
     END
 END
