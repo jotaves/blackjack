@@ -10,7 +10,7 @@ INVARIANT dealer_cards <: CARDS * SUITS & dealer_points : (CARDS * SUITS) <-> NA
 INITIALISATION dealer_cards := {} || dealer_points := {} || dealer_points_sum := 0 || dealer_can_start := TRUE || dealer_can_hit := FALSE
 OPERATIONS
     dealer_hit(cc) =
-    PRE cc <: CARDS * SUITS & cc \/ dealer_cards <: CARDS * SUITS  & dealer_can_start = FALSE & dealer_can_hit = TRUE & (SIGMA zz . (zz : cc \/ dealer_cards | cards_points(prj1(CARDS, SUITS)(zz))) > 16)
+    PRE cc <: CARDS * SUITS & dealer_can_start = FALSE & dealer_can_hit = TRUE & (SIGMA zz . (zz : cc \/ dealer_cards | cards_points(prj1(CARDS, SUITS)(zz))) > 16)
     THEN dealer_cards := dealer_cards \/ cc || dealer_can_hit := FALSE || dealer_points_sum := SIGMA zz . (zz : cc \/ dealer_cards | cards_points(prj1(CARDS, SUITS)(zz)))
     END;
 
