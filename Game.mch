@@ -10,8 +10,16 @@ VARIABLES game_cards
 INVARIANT game_cards <: CARDS * SUITS & game_cards /\ player_cards /\ dealer_cards = {}
 INITIALISATION game_cards := CARDS * SUITS
 OPERATIONS
-    hit_action =
-    PRE player_bet /= 0 & player_points_sum < 22 & player_has_stand = FALSE
+    player_init_action =
+    PRE card(player_cards) = 0 & player_bet /= 0 & player_has_start = FALSE & player_has_set_bet = TRUE
+    THEN    ANY cc
+   	WHERE cc <: game_cards & card(cc) = 2
+    	THEN game_cards := game_cards - cc || player_init(cc)
+    	END 
+    END;
+
+    player_hit_action =
+    PRE player_bet /= 0 & player_has_stand = FALSE & player_has_start = TRUE & player_has_set_bet = TRUE & player_points_sum < 22
     THEN
     	ANY cc
    	WHERE cc : game_cards
@@ -19,18 +27,27 @@ OPERATIONS
     	END
     END;
     
-    stand_action =
-    PRE player_bet /= 0 & dealer_can_start = FALSE & dealer_can_hit = TRUE
-    THEN player_stand ||
-        ANY cc
-        WHERE cc <: game_cards & (SIGMA zz . (zz : cc \/ dealer_cards | cards_points(prj1(CARDS, SUITS)(zz))) > 16)
-        THEN game_cards := game_cards - cc || dealer_hit(cc)
-        END
+    player_stand_action =
+    PRE player_has_stand = FALSE & player_has_start = TRUE & player_has_set_bet = TRUE
+    THEN player_stand
     END;
 
-    set_bet_action(bet) =
-    PRE bet : NAT & card(dealer_cards) = 0 & dealer_can_start = TRUE
-    THEN set_bet(bet) || dealer_init
+    dealer_hit_action =
+    PRE player_bet /= 0
+    THEN	ANY cc
+   	WHERE cc : game_cards
+    	THEN game_cards := game_cards - {cc} || dealer_hit(cc)
+    	END
+    END;
+
+    dealer_stand_action =
+    PRE dealer_points_sum > 21
+    THEN dealer_stand
+    END;
+
+    player_set_bet_action(bet) =
+    PRE bet : NAT & player_has_set_bet = FALSE
+    THEN set_bet(bet)
     END;
 
     winner <-- finish_game =
