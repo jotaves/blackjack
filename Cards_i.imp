@@ -1,0 +1,33 @@
+/* Cards_i
+ * Author: João Victor
+ * Creation date: 16/06/2019
+ */
+
+IMPLEMENTATION Cards_i
+REFINES Cards
+CONCRETE_VARIABLES cards_points_i
+INVARIANT cards_points_i : 0..51 --> 1..11 & dom(cards_points_i) = dom(cards_points) & ran(cards_points_i) = ran(cards_points)
+INITIALISATION
+    VAR ii IN
+        ii := 0;
+        WHILE ii <= 51 DO 
+            IF ii <= 3 THEN cards_points_i(ii) := 11
+            ELSE IF ii <= 7 THEN cards_points_i(ii) := 2
+            ELSE IF ii <= 11 THEN cards_points_i(ii) := 3
+            ELSE IF ii <= 15 THEN cards_points_i(ii) := 4
+            ELSE IF ii <= 19 THEN cards_points_i(ii) := 5
+            ELSE IF ii <= 23 THEN cards_points_i(ii) := 6
+            ELSE IF ii <= 27 THEN cards_points_i(ii) := 7
+            ELSE IF ii <= 31 THEN cards_points_i(ii) := 8
+            ELSE IF ii <= 35 THEN cards_points_i(ii) := 9
+            ELSE IF ii <= 39 THEN cards_points_i(ii) := 10
+            ELSE IF ii <= 43 THEN cards_points_i(ii) := 10
+            ELSE IF ii <= 47 THEN cards_points_i(ii) := 10
+            ELSE IF ii <= 51 THEN cards_points_i(ii) := 10 
+            END END END END END END END END END END END END END;
+            ii := ii + 1
+        INVARIANT !nn . (nn:0..(ii-1) => cards_points_i(nn) = cards_points(nn))
+        VARIANT (51 - ii)
+        END
+    END
+END

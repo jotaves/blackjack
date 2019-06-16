@@ -6,14 +6,14 @@ MACHINE
     Player
 SEES Cards
 VARIABLES player_cards, player_bet, player_points, player_points_sum, player_has_stand, player_has_start, player_has_set_bet
-INVARIANT player_cards <: CARDS * SUITS & player_bet : NAT & player_points : (CARDS * SUITS) <-> NAT & player_points_sum : NAT & player_points_sum = SIGMA zz . (zz : player_points | prj2((CARDS * SUITS), NAT)(zz)) & player_has_stand : {TRUE, FALSE} & player_has_start : {TRUE, FALSE} & player_has_set_bet : {TRUE, FALSE}
+INVARIANT player_cards <: 1..52 & player_bet : NAT & player_points : 1..52 <-> NAT & player_points_sum : NAT & player_points_sum = SIGMA zz . (zz : player_points | prj2(1..52, NAT)(zz)) & player_has_stand : {TRUE, FALSE} & player_has_start : {TRUE, FALSE} & player_has_set_bet : {TRUE, FALSE}
 INITIALISATION player_cards := {} || player_bet := 0 || player_points := {} || player_points_sum := 0 || player_has_stand := FALSE || player_has_start := FALSE || player_has_set_bet := FALSE
 OPERATIONS
     player_hit(cc) = 
-    PRE cc : CARDS * SUITS & player_bet /= 0 & cc /: player_cards & player_has_stand = FALSE & player_has_start = TRUE & player_has_set_bet = TRUE
+    PRE cc : 1..52 & player_bet /= 0 & cc /: player_cards & player_has_stand = FALSE & player_has_start = TRUE & player_has_set_bet = TRUE
     THEN player_cards := player_cards \/ {cc} 
 	// SE AO ADICIONAR A CARTA NOVA DER MAIS QUE 21
-	|| IF player_points_sum  + cards_points(prj1(CARDS, SUITS)(cc)) > 21
+	|| IF player_points_sum  + cards_points(cc) > 21
 		// SE TIVER UM ACE NOS PONTOS DO JOGADOR
 	THEN 	IF # ss . (ss : SUITS & (ACE |-> ss) |-> 11 : player_points)
 		// MUDAR PONTUAÇÃO DO ACE PARA 1 E ADICIONAR PONTUAÇÃO DA CARTA

@@ -3,8 +3,7 @@
  * Creation date: 27/05/2019
  */
 MACHINE Cards
-VARIABLES cards_points, cards_points_ace1
-SETS CARDS = {ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING}; SUITS = {HEART, DIAMOND, CLUB, SPADE}
-INVARIANT cards_points : CARDS <-> NAT & cards_points_ace1 : CARDS <-> NAT
-INITIALISATION cards_points := {(ACE |-> 11), (TWO |-> 2), (THREE |-> 3), (FOUR |-> 4), (FIVE |-> 5), (SIX |-> 6),(SEVEN |-> 7), (EIGHT |-> 8), (NINE |-> 9)} \/ {TEN, JACK, QUEEN, KING} * {10} || cards_points_ace1 := {(ACE |-> 1), (TWO |-> 2), (THREE |-> 3), (FOUR |-> 4), (FIVE |-> 5), (SIX |-> 6),(SEVEN |-> 7), (EIGHT |-> 8), (NINE |-> 9)} \/ {TEN, JACK, QUEEN, KING} * {10}
+VARIABLES cards_points
+INVARIANT cards_points : 0..51 --> 2..11
+INITIALISATION cards_points := (0..3) * {11} \/ (4..7) * {2} \/ (8..11) * {3} \/ (12..15) * {4} \/ (16..19) * {5} \/ (20..23) * {6} \/ (24..27) * {7} \/ (28..31) * {8} \/ (32..35) * {9} \/ (36..39) * {10} \/ (40..43) * {10} \/ (44..47) * {10} \/ (48..51) * {10}
 END

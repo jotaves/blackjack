@@ -7,8 +7,8 @@ MACHINE
 SEES Cards, Game_ctx
 INCLUDES Player, Dealer
 VARIABLES game_cards
-INVARIANT game_cards <: CARDS * SUITS & game_cards /\ player_cards /\ dealer_cards = {}
-INITIALISATION game_cards := CARDS * SUITS
+INVARIANT game_cards <: 1..52 & game_cards /\ player_cards /\ dealer_cards = {}
+INITIALISATION game_cards := 0..52
 OPERATIONS
     player_init_action =
     PRE card(player_cards) = 0 & player_bet /= 0 & player_has_start = FALSE & player_has_set_bet = TRUE & dealer_has_start = TRUE
