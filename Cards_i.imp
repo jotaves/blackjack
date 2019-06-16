@@ -5,29 +5,20 @@
 
 IMPLEMENTATION Cards_i
 REFINES Cards
-CONCRETE_VARIABLES cards_points_i
-INVARIANT cards_points_i : 0..51 --> 1..11 & dom(cards_points_i) = dom(cards_points) & ran(cards_points_i) = ran(cards_points)
-INITIALISATION
+CONCRETE_CONSTANTS cards_points_i
+PROPERTIES cards_points_i : 0..12 --> 2..11 & dom(cards_points) = dom(cards_points_i) & ran(cards_points) = ran(cards_points_i)
+VALUES cards_points_i = {0|->11, 1|->2, 2|->3, 3|->4, 4|->5, 5|->6, 6|->7, 7|->8, 8|->9, 9|->10, 10|->10, 11|->10, 12|->10}
+CONCRETE_VARIABLES deck_cards_i
+INVARIANT deck_cards_i : (0..52) --> BOOL 
+    & deck_cards = dom(deck_cards_i |> {TRUE})
+INITIALISATION 
     VAR ii IN
         ii := 0;
-        WHILE ii <= 51 DO 
-            IF ii <= 3 THEN cards_points_i(ii) := 11
-            ELSE IF ii <= 7 THEN cards_points_i(ii) := 2
-            ELSE IF ii <= 11 THEN cards_points_i(ii) := 3
-            ELSE IF ii <= 15 THEN cards_points_i(ii) := 4
-            ELSE IF ii <= 19 THEN cards_points_i(ii) := 5
-            ELSE IF ii <= 23 THEN cards_points_i(ii) := 6
-            ELSE IF ii <= 27 THEN cards_points_i(ii) := 7
-            ELSE IF ii <= 31 THEN cards_points_i(ii) := 8
-            ELSE IF ii <= 35 THEN cards_points_i(ii) := 9
-            ELSE IF ii <= 39 THEN cards_points_i(ii) := 10
-            ELSE IF ii <= 43 THEN cards_points_i(ii) := 10
-            ELSE IF ii <= 47 THEN cards_points_i(ii) := 10
-            ELSE IF ii <= 51 THEN cards_points_i(ii) := 10 
-            END END END END END END END END END END END END END;
+        WHILE (ii <= 51) DO 
+            deck_cards_i(ii) := TRUE;
             ii := ii + 1
-        INVARIANT !nn . (nn:0..(ii-1) => cards_points_i(nn) = cards_points(nn))
-        VARIANT (51 - ii)
-        END
-    END
+        INVARIANT !nn . (nn:0..(ii-1) => (deck_cards_i(ii) = TRUE))
+        VARIANT (11 - ii)
+        END          
+END
 END

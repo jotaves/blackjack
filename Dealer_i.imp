@@ -1,0 +1,14 @@
+/* Dealer_i
+ * Author: João Victor
+ * Creation date: 16/06/2019
+ */
+
+IMPLEMENTATION Dealer_i
+REFINES Dealer
+
+SEES Cards, Game_ctx
+
+CONCRETE_VARIABLES dealer_cards_i, dealer_points_i, dealer_points_sum_i, dealer_has_start_i, dealer_has_stand_i
+INVARIANT dealer_cards_i : 0..51 --> BOOL & dealer_points_i : 0..51 --> 0..11 & dealer_points_sum_i : NAT & dealer_has_start_i : BOOL & dealer_has_stand_i : BOOL
+INITIALISATION dealer_cards_i := {}; dealer_points_i := {}; dealer_points_sum_i := 0; dealer_has_start_i := FALSE; dealer_has_stand_i := FALSE
+END
