@@ -1,0 +1,94 @@
+/* Game_i
+* Author: João Victor
+* Creation date: 17/06/2019
+*/
+
+IMPLEMENTATION Game_i
+REFINES Game
+SEES Game_ctx
+IMPORTS Player, Dealer, Cards PROMOTES get_player_blackjack
+CONCRETE_VARIABLES deck_cards_i, dealer_blackjack_i, player_blackjack_i, dealer_lose_i, player_lose_i, dealer_points_sum_i, player_points_sum_i
+INVARIANT deck_cards_i : (0..51) --> BOOL & dealer_blackjack_i : BOOL & dealer_blackjack_i = dealer_blackjack & player_blackjack_i : BOOL & player_blackjack_i = player_blackjack & dealer_lose_i : BOOL & dealer_lose_i = dealer_lose & player_lose_i : BOOL & player_lose_i = player_lose & dealer_points_sum_i : NAT & dealer_points_sum_i = dealer_points_sum & player_points_sum_i : NAT & player_points_sum_i = player_points_sum
+    & deck_cards = dom(deck_cards_i |> {TRUE})
+INITIALISATION 
+    VAR ii IN
+        ii := 0;
+        WHILE (ii <= 51) DO 
+            deck_cards_i(ii) := TRUE;
+            ii := ii + 1
+        INVARIANT !nn . (nn:0..(ii-1) => (deck_cards_i(nn) = TRUE))
+        VARIANT (51 - ii)
+        END; dealer_blackjack_i := FALSE; player_blackjack_i := FALSE; dealer_lose_i := FALSE; player_lose_i := FALSE; dealer_points_sum_i := 0; player_points_sum_i := 0
+    END
+    
+OPERATIONS
+    player_init_action =
+    BEGIN VAR cc1, cc2 IN
+            cc1 := 0; cc2 := 6;
+            deck_cards_i(cc1) := FALSE; 
+            deck_cards_i(cc2) := FALSE;
+            player_init(cc1, cc2)
+        END 
+    END;
+    
+    
+    player_hit_action =
+    BEGIN VAR cc IN cc := 4;
+            deck_cards_i(cc) := FALSE;
+            player_hit(cc)
+        END
+    END;
+    
+    
+    player_stand_action =
+    BEGIN player_stand
+    END;
+    
+    
+    dealer_init_action =
+    BEGIN VAR cc IN cc := 7;
+            deck_cards_i(cc) := FALSE;
+            dealer_init(cc)
+        END 
+    END;
+    
+    
+    dealer_hit_action =
+    BEGIN VAR cc IN cc := 8;
+            deck_cards_i(cc) := FALSE; 
+            dealer_hit(cc)
+        END
+    END;
+    
+    
+    dealer_stand_action =
+    BEGIN dealer_stand
+    END;
+    
+    
+    player_set_bet_action(bet) =
+    BEGIN set_bet(bet)
+    END;
+    
+    
+    winner <-- finish_game =
+    BEGIN dealer_blackjack_i <-- get_dealer_blackjack; player_blackjack_i <-- get_player_blackjack; player_lose_i <-- get_player_lose; dealer_lose_i <-- get_dealer_lose; player_points_sum_i <-- get_player_points_sum; dealer_points_sum_i <-- get_dealer_points_sum;
+        IF dealer_blackjack_i = TRUE THEN
+            winner := PLAYER
+        ELSE IF player_blackjack_i = TRUE THEN
+                winner := DEALER
+            ELSE IF player_lose_i = TRUE THEN
+                    winner := DEALER
+                ELSE IF dealer_lose_i = TRUE THEN
+                        winner := PLAYER
+                    ELSE IF player_points_sum_i > dealer_points_sum_i THEN
+                            winner := PLAYER
+                        ELSE winner := DEALER
+                        END
+                    END
+                END
+            END
+        END
+    END
+    
+END

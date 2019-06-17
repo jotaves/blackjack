@@ -1,0 +1,142 @@
+/* Dealer_i
+* Author: João Victor
+* Creation date: 16/06/2019
+*/
+
+IMPLEMENTATION Dealer_i
+REFINES Dealer
+    
+SEES Cards, Game_ctx
+CONCRETE_CONSTANTS cards_points_i
+PROPERTIES cards_points_i : 0..12 --> 2..11
+VALUES cards_points_i = {0|->11, 1|->2, 2|->3, 3|->4, 4|->5, 5|->6, 6|->7, 7|->8, 8|->9, 9|->10, 10|->10, 11|->10, 12|->10}
+CONCRETE_VARIABLES dealer_cards_i, dealer_points_i, dealer_points_sum_i, dealer_has_start_i, dealer_has_stand_i, dealer_lose_i, dealer_blackjack_i
+INVARIANT dealer_cards_i : 0..51 --> BOOL & dealer_cards = dom(dealer_cards_i |> {TRUE}) & dealer_points_i : 0..51 --> 0..11 & dealer_points = dealer_points_i & dom(dealer_points) = dom(dealer_points_i) & ran(dealer_points) = ran(dealer_points_i) & dealer_points_sum_i : NAT & dealer_has_start_i : BOOL & dealer_has_stand_i : BOOL & dealer_lose_i : BOOL & dealer_blackjack_i : BOOL
+INITIALISATION 
+    VAR ii IN
+        ii := 0;
+        WHILE (ii <= 51) DO 
+            dealer_cards_i(ii) := FALSE;
+            dealer_points_i(ii) := 0;
+            ii := ii + 1
+        INVARIANT !nn . (nn:0..(ii-1) => (dealer_cards_i(nn) = FALSE &
+                dealer_points_i(nn) = 0))
+        VARIANT (51 - ii)
+        END 
+    END; dealer_points_sum_i := 0; dealer_has_start_i := FALSE; dealer_has_stand_i := FALSE; dealer_lose_i := FALSE; dealer_blackjack_i := FALSE
+OPERATIONS
+    dealer_hit(cc) =
+    BEGIN dealer_cards_i(cc) := TRUE;
+        // SE AO ADICIONAR A CARTA NOVA DER MAIS QUE 21
+        VAR dp0 IN dp0 := dealer_points_sum_i  + cards_points_i(cc mod 13);
+            IF dp0 > 21 THEN
+                // SE TIVER UM ACE NOS PONTOS DO JOGADOR
+                VAR ii, not_found_11_ace IN
+                    ii := 0;
+                    not_found_11_ace := TRUE;
+                    WHILE (not_found_11_ace = TRUE & ii <= 51) DO 
+                        VAR dp IN
+                            dp := dealer_points_i(ii);
+                            IF dp = 11
+                            THEN not_found_11_ace := FALSE
+                            ELSE ii := ii + 1
+                            END
+                        END
+                    INVARIANT !nn . (nn:0..(ii-1) => (dealer_points_i(nn) /= 11))
+                    VARIANT (51 - ii)
+                    END;
+                    IF not_found_11_ace = FALSE THEN
+                        IF cc = 0 or cc = 13 or cc = 26 or cc = 39 THEN
+                            // MUDA A PONTUAÇÃO DE UM ACE EXISTENTE E O NOVO ACE VALERÁ 11
+                            dealer_points_i(ii) := 1; 
+                            dealer_points_i(cc):= 11; 
+                            dealer_points_sum_i := dealer_points_sum_i - 10 + 11; 
+                            VAR dp1 IN 
+                                dp1 := dealer_points_sum_i - 10 + 11;
+                                IF 21 = dp1 THEN 
+                                    dealer_blackjack_i := TRUE 
+                                END 
+                            END
+                            // SE A CARTA INSERIDA NÃO FOR UM ACE, MUDA A PONTUAÇÃO DE UM ACE E A ACRESCENTA
+                        ELSE	
+                            dealer_points_i(ii) := 1; 
+                            dealer_points_i(cc) := cards_points_i(cc mod 13); 
+                            dealer_points_sum_i := dealer_points_sum_i - 10 + cards_points_i(cc mod 13)
+                        END
+                        // CASO NÃO TENHA ACE NOS PONTOS DO JOGADOR, SE A CARTA A SER INSERIDA FOR UM ACE
+                    ELSE IF cc = 0 or cc = 13 or cc = 26 or cc = 39 THEN
+                            VAR dp2 IN 
+                                dp2 := dealer_points_sum_i + 11;
+                                IF dp2 > 21 THEN 
+                                    dealer_points_i(cc) := 1; 
+                                    dealer_points_sum_i := dealer_points_sum_i + 1;
+                                    VAR dp3 IN 
+                                        dp3 := dealer_points_sum_i + 1; 
+                                        IF 21 = dp3 THEN 
+                                            dealer_blackjack_i := TRUE 
+                                        END 
+                                    END
+                                ELSE 
+                                    dealer_points_i(cc) := 11; 
+                                    dealer_points_sum_i := dealer_points_sum_i + 11;
+                                    VAR dp4 IN 
+                                        dp4 := dealer_points_sum_i + 11; 
+                                        IF 21 = dp4 THEN 
+                                            dealer_blackjack_i := TRUE 
+                                        END 
+                                    END
+                                END
+                            END
+                            // CASO NÃO SEJA UM ACE
+                        ELSE	
+                            dealer_points_i(cc) := cards_points_i(cc mod 13); 
+                            dealer_points_sum_i := dealer_points_sum_i + cards_points_i(cc mod 13); 
+                            VAR dp5 IN
+                                dp5 := dealer_points_sum_i + cards_points_i(cc mod 13);
+                                IF 21 < dp5 THEN 
+                                    dealer_lose_i := TRUE 
+                                END
+                            END
+                        END
+                    END
+                END
+                // SE NÃO FOR DAR MAIS QUE 21, APENAS INSERE
+            ELSE dealer_points_i(cc) := cards_points_i(cc mod 13); 
+                dealer_points_sum_i := dealer_points_sum_i + cards_points_i(cc mod 13); 
+                VAR dp6 IN 
+                    dp6 := dealer_points_sum_i + cards_points_i(cc mod 13); 
+                    IF 21 = dp6 THEN 
+                        dealer_blackjack_i := TRUE 
+                    END
+                END
+            END
+        END
+    END;
+    
+    dealer_stand =
+    BEGIN dealer_has_stand_i := TRUE
+    END;
+    
+    dealer_init(cc) = 
+    BEGIN 
+        dealer_cards_i(cc) := TRUE; 
+        dealer_points_i(cc) := cards_points_i(cc mod 13); 
+        dealer_points_sum_i := cards_points_i(cc mod 13); 
+        dealer_has_start_i := TRUE
+    END;
+    
+    rr <-- get_dealer_blackjack =
+    BEGIN
+        rr := dealer_blackjack_i
+    END;
+    
+    rr <-- get_dealer_lose =
+    BEGIN
+        rr := dealer_lose_i
+    END;
+    
+    rr <-- get_dealer_points_sum =
+    BEGIN
+        rr := dealer_points_sum_i
+    END
+END
