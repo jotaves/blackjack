@@ -122,26 +122,6 @@ OPERATIONS
     BEGIN player_has_stand_i := TRUE
     END;
     
-    double_down =
-    BEGIN skip
-    END;
-    
-    split =
-    BEGIN skip
-    END; 
-    
-    accept_insurance =
-    BEGIN skip
-    END;
-    
-    reject_insurance = 
-    BEGIN skip
-    END;
-    
-    surrender = 
-    BEGIN skip
-    END;
-    
     set_bet(bet) =
     BEGIN player_bet := bet; player_has_set_bet_i := TRUE
     END;

@@ -63,31 +63,6 @@ OPERATIONS
     THEN player_has_stand := TRUE
     END;
     
-    double_down =
-    PRE player_has_stand = FALSE & player_has_start = TRUE & player_has_set_bet = TRUE & player_blackjack = FALSE & player_lose = FALSE
-    THEN skip
-    END;
-    
-    split =
-    PRE player_has_stand = FALSE & player_has_start = TRUE & player_has_set_bet = TRUE & player_blackjack = FALSE & player_lose = FALSE
-    THEN skip
-    END; 
-    
-    accept_insurance =
-    PRE player_has_stand = FALSE & player_has_start = TRUE & player_has_set_bet = TRUE & player_blackjack = FALSE & player_lose = FALSE
-    THEN skip
-    END;
-    
-    reject_insurance = 
-    PRE player_has_stand = FALSE & player_has_start = TRUE & player_has_set_bet = TRUE & player_blackjack = FALSE & player_lose = FALSE
-    THEN skip
-    END;
-    
-    surrender = 
-    PRE player_has_stand = FALSE & player_has_start = TRUE & player_has_set_bet = TRUE & player_blackjack = FALSE & player_lose = FALSE
-    THEN skip
-    END;
-    
     set_bet(bet) =
     PRE bet : NAT1 & player_has_set_bet = FALSE & player_blackjack = FALSE & player_lose = FALSE
     THEN player_bet := bet || player_has_set_bet := TRUE
