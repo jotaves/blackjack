@@ -19,6 +19,11 @@ INITIALISATION
             ii := ii + 1
         INVARIANT !nn . (nn:0..(ii-1) => (deck_cards_i(nn) = TRUE))
         VARIANT (51 - ii)
-    END          
-END
+        END          
+    END
+OPERATIONS
+    remove_card(cc) =
+    BEGIN     
+        deck_cards_i(cc) := FALSE
+    END
 END

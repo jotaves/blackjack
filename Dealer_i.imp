@@ -11,7 +11,7 @@ CONCRETE_CONSTANTS cards_points_i
 PROPERTIES cards_points_i : 0..12 --> 2..11
 VALUES cards_points_i = {0|->11, 1|->2, 2|->3, 3|->4, 4|->5, 5|->6, 6|->7, 7|->8, 8|->9, 9|->10, 10|->10, 11|->10, 12|->10}
 CONCRETE_VARIABLES dealer_cards_i, dealer_points_i, dealer_points_sum_i, dealer_has_start_i, dealer_has_stand_i, dealer_lose_i, dealer_blackjack_i
-INVARIANT dealer_cards_i : 0..51 --> BOOL & dealer_cards = dom(dealer_cards_i |> {TRUE}) & dealer_points_i : 0..51 --> 0..11 & dealer_points = dealer_points_i & dealer_points_sum_i : NAT & dealer_has_start_i : BOOL & dealer_has_stand_i : BOOL & dealer_lose_i : BOOL & dealer_blackjack_i : BOOL
+INVARIANT dealer_cards_i : 0..51 --> BOOL & dealer_cards = dom(dealer_cards_i |> {TRUE}) & dealer_points_i : 0..51 --> 0..11 & dealer_points = dealer_points_i & dom(dealer_points) = dom(dealer_points_i) & ran(dealer_points) = ran(dealer_points_i) & dealer_points_sum_i : NAT & dealer_has_start_i : BOOL & dealer_has_stand_i : BOOL & dealer_lose_i : BOOL & dealer_blackjack_i : BOOL
 INITIALISATION 
     VAR ii IN
         ii := 0;

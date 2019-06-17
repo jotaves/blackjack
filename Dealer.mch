@@ -6,7 +6,7 @@ MACHINE
     Dealer
 SEES Cards, Game_ctx
 VARIABLES dealer_cards, dealer_points, dealer_points_sum, dealer_has_start, dealer_has_stand, dealer_lose, dealer_blackjack
-INVARIANT dealer_cards <: (0..51) & dealer_points : (0..51) --> (0..11) & dealer_points_sum : NAT & dealer_has_start : BOOL & dealer_has_stand : BOOL & dealer_lose : BOOL & dealer_blackjack : BOOL
+INVARIANT dealer_cards <: (0..51) & dealer_points : (0..51) <-> (0..11) & dealer_points_sum : NAT & dealer_has_start : BOOL & dealer_has_stand : BOOL & dealer_lose : BOOL & dealer_blackjack : BOOL
 INITIALISATION dealer_cards := {} || dealer_points := (0..51) * {0} || dealer_points_sum := 0 || dealer_has_start := FALSE || dealer_has_stand := FALSE || dealer_lose := FALSE || dealer_blackjack := FALSE
 OPERATIONS
     dealer_hit(cc) = 
@@ -15,7 +15,7 @@ OPERATIONS
 	// SE AO ADICIONAR A CARTA NOVA DER MAIS QUE 21
 	|| IF dealer_points_sum  + cards_points(cc mod 13) > 21
 		// SE TIVER UM ACE NOS PONTOS DO JOGADOR
-	THEN 	IF # ss . (ss : 0..51 & (ss) |-> 11 : dealer_points)
+	THEN 	IF # ss . (ss : dealer_cards & (ss) |-> 11 : dealer_points)
 		// MUDAR PONTUAÇÃO DO ACE PARA 1 E ADICIONAR PONTUAÇÃO DA CARTA
 		THEN 	ANY xx
 			// ACHA UM ACE QUE POSSUI 11 DE PONTUAÇÃO PARA MUDAR PARA 1
@@ -46,7 +46,7 @@ OPERATIONS
     END;
 
     dealer_stand =
-    PRE dealer_has_start = TRUE & dealer_has_stand = FALSE
+    PRE dealer_has_start = TRUE & dealer_has_stand = FALSE & dealer_blackjack = FALSE & dealer_lose = FALSE
     THEN dealer_has_stand := TRUE
     END;
 
