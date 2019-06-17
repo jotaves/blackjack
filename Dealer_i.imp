@@ -2,28 +2,34 @@
 * Author: João Victor
 * Creation date: 16/06/2019
 */
-
 IMPLEMENTATION Dealer_i
+
 REFINES Dealer
     
-SEES Cards, Game_ctx
+SEES Cards_ctx, Game_ctx
+    
+    
 CONCRETE_CONSTANTS cards_points_i
-PROPERTIES cards_points_i : 0..12 --> 2..11
-VALUES cards_points_i = {0|->11, 1|->2, 2|->3, 3|->4, 4|->5, 5|->6, 6|->7, 7|->8, 8|->9, 9|->10, 10|->10, 11|->10, 12|->10}
+    
+PROPERTIES cards_points_i : (0..12) --> (2..11) & dom(cards_points_i) = (0..12) & ran(cards_points_i) = (2..11) & cards_points = cards_points_i
+    
+VALUES cards_points_i = {0 |-> 11, 1 |-> 2, 2 |-> 3, 3 |-> 4, 4 |-> 5, 5 |-> 6, 6 |-> 7, 7 |-> 8, 8 |-> 9, 9 |-> 10, 10 |-> 10, 11 |-> 10, 12 |-> 10}
+    
 CONCRETE_VARIABLES dealer_cards_i, dealer_points_i, dealer_points_sum_i, dealer_has_start_i, dealer_has_stand_i, dealer_lose_i, dealer_blackjack_i
-INVARIANT dealer_cards_i : 0..51 --> BOOL & dealer_cards = dom(dealer_cards_i |> {TRUE}) & dealer_points_i : 0..51 --> 0..11 & dealer_points = dealer_points_i & dom(dealer_points) = dom(dealer_points_i) & ran(dealer_points) = ran(dealer_points_i) & dealer_points_sum_i : NAT & dealer_has_start_i : BOOL & dealer_has_stand_i : BOOL & dealer_lose_i : BOOL & dealer_blackjack_i : BOOL
-INITIALISATION 
-    VAR ii IN
-        ii := 0;
-        WHILE (ii <= 51) DO 
-            dealer_cards_i(ii) := FALSE;
-            dealer_points_i(ii) := 0;
-            ii := ii + 1
-        INVARIANT !nn . (nn:0..(ii-1) => (dealer_cards_i(nn) = FALSE &
-                dealer_points_i(nn) = 0))
-        VARIANT (51 - ii)
-        END 
-    END; dealer_points_sum_i := 0; dealer_has_start_i := FALSE; dealer_has_stand_i := FALSE; dealer_lose_i := FALSE; dealer_blackjack_i := FALSE
+    
+INVARIANT 
+    dealer_cards_i : (0..51) --> BOOL & dom(dealer_cards_i) = (0..51) & dealer_cards = dom(dealer_cards_i |> {TRUE}) & 
+    dealer_points_i : (0..51) --> (0..11) & dom(dealer_points_i) = (0..51) & dealer_points = dealer_points_i & 
+    dealer_points_sum_i : NAT & 
+    dealer_points_sum_i = dealer_points_sum & 
+    dealer_has_start_i : BOOL & 
+    dealer_has_start_i = dealer_has_start & 
+    dealer_has_stand_i : BOOL & dealer_has_stand_i = dealer_has_stand & 
+    dealer_lose_i : BOOL & dealer_lose_i = dealer_lose & 
+    dealer_blackjack_i : BOOL & dealer_blackjack_i = dealer_blackjack
+    
+INITIALISATION dealer_cards_i := (0..51)*{FALSE}; dealer_points_i := (0..51)*{0}; dealer_points_sum_i := 0; dealer_has_start_i := FALSE; dealer_has_stand_i := FALSE; dealer_lose_i := FALSE; dealer_blackjack_i := FALSE
+    
 OPERATIONS
     dealer_hit(cc) =
     BEGIN dealer_cards_i(cc) := TRUE;

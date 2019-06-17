@@ -1,35 +1,33 @@
 /* Player_i
- * Author: João Victor
- * Creation date: 17/06/2019
- */
-
+* Author: João Victor
+* Creation date: 17/06/2019
+*/
 IMPLEMENTATION Player_i
+    
 REFINES Player
-
-SEES Cards
+    
+SEES Cards_ctx
+    
 CONCRETE_CONSTANTS cards_points_i
-
-PROPERTIES cards_points_i : 0..12 --> 2..11
-
-VALUES cards_points_i = {0|->11, 1|->2, 2|->3, 3|->4, 4|->5, 5|->6, 6|->7, 7|->8, 8|->9, 9|->10, 10|->10, 11|->10, 12|->10}
-
+    
+PROPERTIES cards_points_i : (0..12) --> (2..11)
+    
+VALUES cards_points_i = {0 |-> 11, 1 |-> 2, 2 |-> 3, 3 |-> 4, 4 |-> 5, 5 |-> 6, 6 |-> 7, 7 |-> 8, 8 |-> 9, 9 |-> 10, 10 |-> 10, 11 |-> 10, 12 |-> 10}
+    
 CONCRETE_VARIABLES player_cards_i, player_bet, player_points_i, player_points_sum_i, player_has_stand_i, player_has_start_i, player_has_set_bet_i, player_blackjack_i, player_lose_i
     
-INVARIANT player_cards_i : (0..51) --> BOOL & player_cards = dom(player_cards_i |> {TRUE}) & player_points_i : 0..51 --> 0..11 & player_points_i = player_points_i & dom(player_points) = dom(player_points_i) & ran(player_points) = ran(player_points_i) & player_points_sum_i : NAT & player_points_sum_i = player_points_sum & player_has_start_i : BOOL & player_has_stand_i : BOOL & player_lose_i : BOOL & player_blackjack_i : BOOL & player_has_set_bet_i : BOOL
-
-INITIALISATION 
-    VAR ii IN
-        ii := 0;
-        WHILE (ii <= 51) DO 
-            player_cards_i(ii) := FALSE;
-            player_points_i(ii) := 0;
-            ii := ii + 1
-        INVARIANT !nn . (nn:0..(ii-1) => (player_cards_i(nn) = FALSE &
-                player_points_i(nn) = 0))
-        VARIANT (51 - ii)
-        END 
-    END; player_bet := 0; player_points_i := (0..51)*{0}; player_points_sum_i := 0; player_has_stand_i := FALSE; player_has_start_i := FALSE; player_has_set_bet_i := FALSE; player_blackjack_i := FALSE; player_lose_i := FALSE
-
+INVARIANT 
+    player_cards_i : (0..51) --> BOOL & dom(player_cards_i) = (0..51) & player_cards = dom(player_cards_i |> {TRUE}) & 
+    player_points_i : (0..51) --> (0..11) & dom(player_points_i) = (0..51) & player_points = player_points_i & 
+    player_points_sum_i : NAT & player_points_sum_i = player_points_sum & 
+    player_has_start_i : BOOL & player_has_start_i = player_has_start &
+    player_has_stand_i : BOOL & player_has_stand = player_has_stand_i &
+    player_lose_i : BOOL & player_lose_i = player_lose &
+    player_blackjack_i : BOOL & player_blackjack = player_blackjack_i &
+    player_has_set_bet_i : BOOL & player_has_set_bet_i = player_has_set_bet
+    
+INITIALISATION player_bet := 0; player_cards_i := (0..51)*{FALSE}; player_points_i := (0..51)*{0}; player_points_sum_i := 0; player_has_stand_i := FALSE; player_has_start_i := FALSE; player_has_set_bet_i := FALSE; player_blackjack_i := FALSE; player_lose_i := FALSE
+    
 OPERATIONS
     player_hit(cc) =
     BEGIN player_cards_i(cc) := TRUE;
@@ -147,22 +145,22 @@ OPERATIONS
     set_bet(bet) =
     BEGIN player_bet := bet; player_has_set_bet_i := TRUE
     END;
-
+    
     player_init(xx, yy) = 
     BEGIN player_cards_i(xx) := TRUE;
-    player_cards_i(yy) := TRUE;
-    IF (xx = 0 or xx = 13 or xx = 26 or xx = 39) & (yy = 0 or yy = 13 or yy = 26 or yy = 39)
-    THEN player_points_i(xx) := 11; player_points_i(yy) := 1; player_points_sum_i := player_points_sum_i + 11 + 1
-    ELSE    IF (xx = 0 or xx = 13 or xx = 26 or xx = 39) & (yy /= 0 & yy /= 13 & yy /= 26 & yy /= 39)
-        THEN player_points_i(xx) := 11; player_points_i(yy) := cards_points_i(yy mod 13); player_points_sum_i := player_points_sum_i + 11 + cards_points_i(yy mod 13)
-        ELSE    IF (xx /= 0 & xx /= 13 & xx /= 26 & xx /= 39) & (yy = 0 or yy = 13 or yy = 26 or yy = 39)
-            THEN player_points_i(xx) := cards_points_i(xx mod 13); player_points_i(yy) := 11; player_points_sum_i := player_points_sum_i + cards_points_i(xx mod 13) + 11
-            ELSE player_points_i(xx) := cards_points_i(xx mod 13); player_points_i(yy) := cards_points_i(yy mod 13); player_points_sum_i := player_points_sum_i + cards_points_i(xx mod 13) + cards_points_i(yy mod 13)
+        player_cards_i(yy) := TRUE;
+        IF (xx = 0 or xx = 13 or xx = 26 or xx = 39) & (yy = 0 or yy = 13 or yy = 26 or yy = 39)
+        THEN player_points_i(xx) := 11; player_points_i(yy) := 1; player_points_sum_i := player_points_sum_i + 11 + 1
+        ELSE    IF (xx = 0 or xx = 13 or xx = 26 or xx = 39) & (yy /= 0 & yy /= 13 & yy /= 26 & yy /= 39)
+            THEN player_points_i(xx) := 11; player_points_i(yy) := cards_points_i(yy mod 13); player_points_sum_i := player_points_sum_i + 11 + cards_points_i(yy mod 13)
+            ELSE    IF (xx /= 0 & xx /= 13 & xx /= 26 & xx /= 39) & (yy = 0 or yy = 13 or yy = 26 or yy = 39)
+                THEN player_points_i(xx) := cards_points_i(xx mod 13); player_points_i(yy) := 11; player_points_sum_i := player_points_sum_i + cards_points_i(xx mod 13) + 11
+                ELSE player_points_i(xx) := cards_points_i(xx mod 13); player_points_i(yy) := cards_points_i(yy mod 13); player_points_sum_i := player_points_sum_i + cards_points_i(xx mod 13) + cards_points_i(yy mod 13)
+                END
             END
-        END
-    END; player_has_start_i := TRUE
-END;
-
+        END; player_has_start_i := TRUE
+    END;
+    
     rr <-- get_player_blackjack =
     BEGIN
         rr := player_blackjack_i
@@ -177,4 +175,4 @@ END;
     BEGIN
         rr := player_points_sum_i
     END
- END
+END
