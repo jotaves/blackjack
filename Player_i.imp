@@ -15,7 +15,7 @@ VALUES cards_points_i = {0|->11, 1|->2, 2|->3, 3|->4, 4|->5, 5|->6, 6|->7, 7|->8
 
 CONCRETE_VARIABLES player_cards_i, player_bet, player_points_i, player_points_sum_i, player_has_stand_i, player_has_start_i, player_has_set_bet_i, player_blackjack_i, player_lose_i
     
-INVARIANT player_cards_i : (0..51) --> BOOL & player_cards = dom(player_cards_i |> {TRUE}) & player_points_i : 0..51 --> 0..11 & player_points_i = player_points_i & dom(player_points) = dom(player_points_i) & ran(player_points) = ran(player_points_i) & player_points_sum_i : NAT & player_has_start_i : BOOL & player_has_stand_i : BOOL & player_lose_i : BOOL & player_blackjack_i : BOOL & player_has_set_bet_i : BOOL
+INVARIANT player_cards_i : (0..51) --> BOOL & player_cards = dom(player_cards_i |> {TRUE}) & player_points_i : 0..51 --> 0..11 & player_points_i = player_points_i & dom(player_points) = dom(player_points_i) & ran(player_points) = ran(player_points_i) & player_points_sum_i : NAT & player_points_sum_i = player_points_sum & player_has_start_i : BOOL & player_has_stand_i : BOOL & player_lose_i : BOOL & player_blackjack_i : BOOL & player_has_set_bet_i : BOOL
 
 INITIALISATION 
     VAR ii IN
@@ -161,5 +161,20 @@ OPERATIONS
             END
         END
     END; player_has_start_i := TRUE
-END
+END;
+
+    rr <-- get_player_blackjack =
+    BEGIN
+        rr := player_blackjack_i
+    END;
+    
+    rr <-- get_player_lose =
+    BEGIN
+        rr := player_lose_i
+    END;
+    
+    rr <-- get_player_points_sum =
+    BEGIN
+        rr := player_points_sum_i
+    END
  END

@@ -53,5 +53,20 @@ OPERATIONS
     dealer_init(cc) = 
     PRE cc : 0..51 & card(dealer_cards) = 0
     THEN dealer_cards := {cc} || dealer_points := dealer_points \/ {(cc |-> cards_points(cc mod 13))} || dealer_points_sum := cards_points(cc mod 13) || dealer_has_start := TRUE
+    END;
+    
+    rr <-- get_dealer_blackjack =
+    BEGIN
+        IF dealer_blackjack = TRUE THEN rr := TRUE ELSE rr := FALSE END
+    END;
+    
+    rr <-- get_dealer_lose =
+    BEGIN
+        rr := dealer_lose
+    END;
+    
+    rr <-- get_dealer_points_sum =
+    BEGIN
+        rr := dealer_points_sum
     END
 END

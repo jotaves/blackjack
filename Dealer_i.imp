@@ -123,5 +123,20 @@ OPERATIONS
         dealer_points_i(cc) := cards_points_i(cc mod 13); 
         dealer_points_sum_i := cards_points_i(cc mod 13); 
         dealer_has_start_i := TRUE
+    END;
+    
+    rr <-- get_dealer_blackjack =
+    BEGIN
+        rr := dealer_blackjack_i
+    END;
+    
+    rr <-- get_dealer_lose =
+    BEGIN
+        rr := dealer_lose_i
+    END;
+    
+    rr <-- get_dealer_points_sum =
+    BEGIN
+        rr := dealer_points_sum_i
     END
 END

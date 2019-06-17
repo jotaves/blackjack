@@ -92,5 +92,20 @@ OPERATIONS
                 END
             END
         END || player_has_start := TRUE
+    END;
+    
+    rr <-- get_player_blackjack =
+    BEGIN
+        rr := player_blackjack
+    END;
+    
+    rr <-- get_player_lose =
+    BEGIN
+        rr := player_lose
+    END;
+    
+    rr <-- get_player_points_sum =
+    BEGIN
+        rr := player_points_sum
     END
 END

@@ -4,11 +4,10 @@
 */
 MACHINE Game
 SEES Game_ctx
-INCLUDES Player, Dealer, Cards
-VARIABLES deck_cards, deck_suits
-INVARIANT deck_cards /\ player_cards /\ dealer_cards = {} & deck_cards <: 0..51
-& deck_suits : 0..51 <-> 0..3
-INITIALISATION deck_cards := (0..51) || deck_suits := (0..51) * (0..3)
+INCLUDES Player, Dealer, Cards PROMOTES get_player_blackjack
+VARIABLES deck_cards
+INVARIANT deck_cards <: 0..51
+INITIALISATION deck_cards := (0..51)
 OPERATIONS
     player_init_action =
     PRE card(player_cards) = 0 & player_bet /= 0 & player_has_start = FALSE & player_has_set_bet = TRUE & dealer_has_start = TRUE
