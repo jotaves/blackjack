@@ -1,0 +1,5 @@
+﻿THEORY User_Pass IS
+Operation(ValuesLemmas) & ff(0) & mp & pp & pp & mp & pp & pp & mp & pp & pp & mp & pp & pp & mp & pp & pp & mp & pp & pp & mp & pp & pp & mp & pp & pp & mp & pp & pp & mp & pp & pp & mp & pp & pp;
+Operation(ValuesLemmas) & ff(0) & mp & pp & pp & mp & pp;
+Operation(ValuesLemmas) & ff(0) & mp & pp & pp & pp
+END 
