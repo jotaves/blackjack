@@ -19,7 +19,8 @@ INITIALISATION
             dealer_cards_i(ii) := FALSE;
             dealer_points_i(ii) := 0;
             ii := ii + 1
-        INVARIANT !nn . (nn:0..(ii-1) => (dealer_cards_i(nn) = TRUE))
+        INVARIANT !nn . (nn:0..(ii-1) => (dealer_cards_i(nn) = FALSE &
+                dealer_points_i(nn) = 0))
         VARIANT (51 - ii)
         END 
     END; dealer_points_sum_i := 0; dealer_has_start_i := FALSE; dealer_has_stand_i := FALSE; dealer_lose_i := FALSE; dealer_blackjack_i := FALSE

@@ -9,4 +9,9 @@ VARIABLES deck_cards, deck_suits
 INVARIANT deck_cards <: 0..51
 & deck_suits : 0..51 <-> 0..3 & dom(deck_suits) = 0..51 & ran(deck_suits) = 0..3
 INITIALISATION deck_cards := (0..51) || deck_suits := (0..51) * (0..3)
+OPERATIONS
+    set_cards(cc) =
+    PRE cc <: 0..51
+    THEN deck_cards := cc
+    END
 END
