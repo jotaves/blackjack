@@ -185,31 +185,6 @@ void Player__player_stand(void)
     Player__player_has_stand_i = true;
 }
 
-void Player__double_down(void)
-{
-    ;
-}
-
-void Player__split(void)
-{
-    ;
-}
-
-void Player__accept_insurance(void)
-{
-    ;
-}
-
-void Player__reject_insurance(void)
-{
-    ;
-}
-
-void Player__surrender(void)
-{
-    ;
-}
-
 void Player__set_bet(int32_t bet)
 {
     Player__player_bet = bet;
